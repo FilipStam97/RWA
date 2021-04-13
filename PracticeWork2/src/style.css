@@ -1,0 +1,45 @@
+.mainAppContainerDiv {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: auto;
+}
+
+.noteAppNoteListDiv {
+    flex-grow: 1;
+}
+
+.noteAppInputDiv{
+    background-color: rgb(120, 120, 219);
+    flex-grow: 1;
+    text-align: center;
+    padding: 5%;
+    padding-bottom: 25%;
+
+}
+
+.InputHead {
+    text-align: center;
+    color: white;
+}
+
+.TitleInputField {
+}
+
+.InputForm {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.containerInputFieldsDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+.TextInputField {
+}
+
+.buttonAdd {
+    color: white;
+}
