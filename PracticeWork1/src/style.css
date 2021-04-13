@@ -14,7 +14,8 @@
     flex-grow: 1;
     text-align: center;
     padding: 5%;
-    padding-bottom: 25%;
+    min-height: 780px;
+    
 
 }
 
