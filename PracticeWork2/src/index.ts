@@ -1,12 +1,6 @@
-import { Note } from "./Note";
-import { NoteApp } from "./NoteApp";
+import { KanyeQuoteApp } from "./KanyeQuoteApp";
 
-console.log('saftaj tuksona');
 
-let newApp = new NoteApp();
+let newApp = new KanyeQuoteApp();
 newApp.renderNoteApp(document.body);
-const notes =[];
-notes.push(new Note('Note1', 'Tukson', 'aaaaaaa'));
-notes.push(new Note('Note69999', 'HjundaiTukon', 'bbbbbb'));
 
-console.log(notes);

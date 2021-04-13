@@ -6,21 +6,28 @@
 }
 
 .noteAppNoteListDiv {
-    flex-grow: 1;
+    flex-grow: 2;
 }
 
 .noteAppInputDiv{
-    background-color: rgb(120, 120, 219);
+    background-color: rgb(74, 100, 82);
     flex-grow: 1;
     text-align: center;
     padding: 5%;
-    padding-bottom: 25%;
+    min-height: 780px;
+    
 
 }
 
 .InputHead {
     text-align: center;
     color: white;
+}
+
+.InputDesc{
+    text-align: center;
+    color: white;
+    margin-top: 2%;
 }
 
 .TitleInputField {
@@ -40,6 +47,6 @@
 .TextInputField {
 }
 
-.buttonAdd {
-    color: white;
-}
+
+
+
