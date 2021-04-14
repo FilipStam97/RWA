@@ -44,7 +44,11 @@
     flex-direction: column;
 }
 
-.TextInputField {
+.noteTextSpan {
+    color:  rgb(74, 100, 82);
+    font-weight: bold;
+    font-size: larger;
+    word-wrap: break-word;
 }
 
 

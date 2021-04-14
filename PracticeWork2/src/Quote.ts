@@ -12,9 +12,9 @@ export class Quote {
         let noteSpanContainer = createHtmlElement(noteListContainer, "span", "noteSpanContainer mdl-list__item-primary-content");
 
         let noteTitleSpan = createHtmlElement(noteSpanContainer, "span", "noteTitleSpan");
-        noteTitleSpan.innerHTML="Kanye said:";
+        noteTitleSpan.innerHTML="Kanye said:<br>";
 
-        let noteTextSpan = createHtmlElement(noteSpanContainer, "span", "noteTextSpan mdl-list__item-text-body");
+        let noteTextSpan = createHtmlElement(noteSpanContainer, "span", "noteTextSpan");
         noteTextSpan.innerHTML=this.text;
   
     }
