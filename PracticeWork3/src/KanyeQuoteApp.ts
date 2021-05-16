@@ -1,6 +1,8 @@
 import { resolve } from "../webpack.config";
 import { Quote } from "./Quote";
-
+import { ajax } from 'rxjs/ajax';
+import {catchError, filter, map} from "rxjs/operators"
+import { of, range } from "rxjs";
 
 export class KanyeQuoteApp {
     public quoteList: Array<Quote>;
@@ -36,7 +38,7 @@ export class KanyeQuoteApp {
         let buttonGetFiveQuotesSequence = createHtmlElement(buttonDiv, "button", "buttonGetFiveQuotesSequence mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect");
         buttonGetFiveQuotesSequence.innerHTML = "Get 5 quotes in a sequence";
         buttonGetFiveQuotesSequence.onclick = () => {
-            this.getFiveQuotesSequence();
+            this.getQuotesAjax();
         }
 
         let buttonGetThreeQuotesSynchronized = createHtmlElement(buttonDiv, "button", "buttonGetThreeQuotesSynchronized mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect");
@@ -81,6 +83,26 @@ export class KanyeQuoteApp {
             this.renderNoteList(noteAppNoteListDiv);
         })
 
+    }
+
+    getQuotesLengthLessThan25(){
+        range(0,10).pipe(
+            map(x=> x*10),
+            filter(x=> x>50)
+        ).subscribe(
+            x => console.log(x)
+        )
+    
+    }
+
+    getQuotesAjax(){
+        const obs$ = ajax.getJSON(`https://api.github.com/users?per_page=5`).pipe(
+            map(userResponse => console.log('users: ', userResponse)),
+            catchError(error => {
+              console.log('error: ', error);
+              return of(error);
+            })
+          );
     }
 
     getQuote() {
