@@ -3,6 +3,7 @@ import { Quote } from "./Quote";
 import { ajax } from 'rxjs/ajax';
 import {catchError, filter, map} from "rxjs/operators"
 import { of, range } from "rxjs";
+import { names } from "./names";
 
 export class KanyeQuoteApp {
     public quoteList: Array<Quote>;
@@ -38,7 +39,7 @@ export class KanyeQuoteApp {
         let buttonGetFiveQuotesSequence = createHtmlElement(buttonDiv, "button", "buttonGetFiveQuotesSequence mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect");
         buttonGetFiveQuotesSequence.innerHTML = "Get 5 quotes in a sequence";
         buttonGetFiveQuotesSequence.onclick = () => {
-            this.getQuotesAjax();
+            this.getQuotesLengthLessThan25();
         }
 
         let buttonGetThreeQuotesSynchronized = createHtmlElement(buttonDiv, "button", "buttonGetThreeQuotesSynchronized mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect");
@@ -87,11 +88,11 @@ export class KanyeQuoteApp {
 
     getQuotesLengthLessThan25(){
         range(0,10).pipe(
-            map(x=> x*10),
-            filter(x=> x>50)
+            map(x=> console.log(x + " "+ names[x])),
+           // filter(x=> x>50)
         ).subscribe(
-            x => console.log(x)
-        )
+          //  x => console.log(x)
+        ) 
     
     }
 
