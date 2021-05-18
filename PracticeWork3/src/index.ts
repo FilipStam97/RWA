@@ -1,6 +1,7 @@
-import { KanyeQuoteApp } from "./KanyeQuoteApp";
+import { NameGenerator } from "./NameGenerator";
 
 
-let newApp = new KanyeQuoteApp();
-newApp.renderNoteApp(document.body);
+let newApp = new NameGenerator();
+newApp.renderApp(document.body);
+
 

@@ -10,7 +10,7 @@
 }
 
 .noteAppInputDiv{
-    background-color: rgb(74, 100, 82);
+    background-color: #1EBCBB;
     flex-grow: 1;
     text-align: center;
     padding: 5%;
@@ -45,9 +45,9 @@
 }
 
 .noteTextSpan {
-    color:  rgb(74, 100, 82);
+    color: #1EBCBB;
     font-weight: bold;
-    font-size: larger;
+    font-size: xx-large;
     word-wrap: break-word;
 }
 
