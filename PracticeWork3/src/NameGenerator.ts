@@ -1,15 +1,21 @@
 import { resolve } from "../webpack.config";
 import { Name } from "./Name";
-import {catchError, filter, map, take} from "rxjs/operators"
-import { from, interval, of, range, Observable } from "rxjs";
+import {catchError, filter, map, take, takeUntil} from "rxjs/operators"
+import { from, interval, of, range, Observable, Subject } from "rxjs";
 import { names } from "./names";
 
 export class NameGenerator {
     public nameList: Array<Name>;
+    public subject: Subject<any>;
 
 
     constructor() {
         this.nameList = [];
+        this.resetSubject();
+        // this.subject=new Subject();
+        // this.subject.subscribe(x =>{
+        //     console.log(x);
+        // });
     }
 
     renderApp(body: HTMLElement) {
@@ -56,6 +62,21 @@ export class NameGenerator {
         buttonGetNamesUntillEnd.innerHTML = "Get 3 names in intervals";
         buttonGetNamesUntillEnd.onclick = () => {
             this.intervalGenerationSequence()
+    
+        }
+
+        let buttonGenerationSequenceDiv = createHtmlElement(buttonDiv, "div", "buttonGenerationSequenceDiv");
+        let buttonStartGeneratingNames = createHtmlElement(buttonGenerationSequenceDiv, "button", "buttonStartGeneratingNames mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect");
+        buttonStartGeneratingNames.innerHTML = "Start name generation sequence";
+        buttonStartGeneratingNames.onclick = () => {
+           const obs = this.startGenerationSequence()
+    
+        }
+
+        let buttonEndGeneratingNames = createHtmlElement(buttonGenerationSequenceDiv, "button", "buttonEndGeneratingNames mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect");
+        buttonEndGeneratingNames.innerHTML = "End name generation sequence";
+        buttonEndGeneratingNames.onclick = () => {
+            this.stopGenerationSequence()
     
         }
     }
@@ -113,8 +134,36 @@ export class NameGenerator {
         })
     }
 
- 
+    startGenerationSequence() {
+        let noteAppNoteListDiv = <HTMLElement>document.querySelector(".noteAppNoteListDiv");
+        this.nameList.splice(0, this.nameList.length);
+        return new Observable(sub => {
+            setInterval(() => {
+                sub.next(Math.floor(Math.random()*21986));
+            },1000)
+        }).pipe(
+            takeUntil(this.subject),
+        ).subscribe(x => {
+            this.nameList.push(new Name(names[<number>x]));
+            noteAppNoteListDiv.innerHTML = '';
+            this.renderNameList(noteAppNoteListDiv);
+        });
 
+    }
+
+    stopGenerationSequence() {
+        this.subject.next('Sequence stopped');
+        this.subject.complete();
+        this.resetSubject();
+    }
+
+ 
+    resetSubject() {
+        this.subject=new Subject();
+        this.subject.subscribe(x =>{
+            console.log(x);
+        });
+    }
 
     getRandomIDList(numberOfIDs :number){
         //console.log(Math.floor(Math.random()*21986))
