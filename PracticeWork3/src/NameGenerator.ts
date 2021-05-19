@@ -1,8 +1,7 @@
 import { resolve } from "../webpack.config";
 import { Name } from "./Name";
-import { ajax } from 'rxjs/ajax';
-import {catchError, filter, map} from "rxjs/operators"
-import { from, of, range } from "rxjs";
+import {catchError, filter, map, take} from "rxjs/operators"
+import { from, interval, of, range, Observable } from "rxjs";
 import { names } from "./names";
 
 export class NameGenerator {
@@ -20,13 +19,13 @@ export class NameGenerator {
 
         let noteAppNoteListDiv = createHtmlElement(mainAppContainerDiv, "div", "noteAppNoteListDiv");
 
-        this.renderNoteInput(noteAppInputDiv);
-        this.renderNoteList(noteAppNoteListDiv);
+        this.renderInput(noteAppInputDiv);
+        this.renderNameList(noteAppNoteListDiv);
 
 
     }
 
-    renderNoteInput(host: HTMLElement) {
+    renderInput(host: HTMLElement) {
         let noteInputHead = createHtmlElement(host, "span", "InputHead mdl-typography--display-2");
         noteInputHead.innerHTML = "Name Generator";
 
@@ -36,87 +35,100 @@ export class NameGenerator {
 
 
         let buttonDiv = createHtmlElement(host, "div", "buttonDiv");
-        let buttonGetFiveQuotesSequence = createHtmlElement(buttonDiv, "button", "buttonGetFiveQuotesSequence mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect");
-        buttonGetFiveQuotesSequence.innerHTML = "Get 5 quotes in a sequence";
-        buttonGetFiveQuotesSequence.onclick = () => {
-            this.getFiveNames();
+        let buttonGetTenNames = createHtmlElement(buttonDiv, "button", "buttonGetTenNames mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect");
+        buttonGetTenNames.innerHTML = "Generate 10 names instantly";
+        buttonGetTenNames.onclick = () => {
+            this.getTenNames();
         
 
         }
 
-        let buttonGetThreeQuotesSynchronized = createHtmlElement(buttonDiv, "button", "buttonGetThreeQuotesSynchronized mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect");
-        buttonGetThreeQuotesSynchronized.innerHTML = "Get 3 quotes immediately";
-        buttonGetThreeQuotesSynchronized.onclick = () => {
-           // this.getThreeQuotesSynchronized()
-           console.log(this.nameList);
+        let buttonGetFiveLetterNames = createHtmlElement(buttonDiv, "button", "buttonGetFiveLetterNames mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect");
+        buttonGetFiveLetterNames.innerHTML = "Generate 5 five letter names";
+        buttonGetFiveLetterNames.onclick = () => {
+            this.getFiveLetterNames();
+       
+           
+        }
+
+
+        let buttonGetNamesUntillEnd = createHtmlElement(buttonDiv, "button", "buttonGetNamesUntillEnd mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect");
+        buttonGetNamesUntillEnd.innerHTML = "Get 3 names in intervals";
+        buttonGetNamesUntillEnd.onclick = () => {
+            this.intervalGenerationSequence()
+    
         }
     }
 
-    renderNoteList(host: HTMLElement) {
+    renderNameList(host: HTMLElement) {
         let noteListUnorderdList = createHtmlElement(host, "ul", "noteListUnorderdList demo-list-three mdl-list");
         this.nameList.forEach(name => {
             name.renderNote(noteListUnorderdList);
         });
     }
 
-    getFiveNames() {
+    getFiveLetterNames() {
         let noteAppNoteListDiv = <HTMLElement>document.querySelector(".noteAppNoteListDiv");
         this.nameList.splice(0, this.nameList.length);
-        const nameIdList = this.getRandomID(10);
-        console.log(nameIdList);
-       const result= from(nameIdList);
-           // map(x => console.log(x) /*this.nameList.push(new Name(names[x]))*/),
-        console.log(result);
-        // for (var i = 0; i < 5; i++) {
-        //     this.getQuote().then(result => {
-        //         this.quoteList.push(new Name(result));
-        //         noteAppNoteListDiv.innerHTML = '';
-        //         this.renderNoteList(noteAppNoteListDiv);
-        //     });
-        // }
+        const nameIdList = this.getRandomIDList(100);
+        from(nameIdList).pipe(
+            filter(x=> names[x].length==5),
+            take(5),
 
-    }
-
-    getThreeQuotesSynchronized() {
-        let noteAppNoteListDiv = <HTMLElement>document.querySelector(".noteAppNoteListDiv");
-        this.nameList.splice(0, this.nameList.length);
-        Promise.all([
-            this.getQuote(),
-            this.getQuote(),
-            this.getQuote()
-        ]).then(array => {
-            array.forEach(string => {
-                this.nameList.push(new Name(string));
-            });
+        ).subscribe(x => {
+            this.nameList.push(new Name(names[x]));
             noteAppNoteListDiv.innerHTML = '';
-            this.renderNoteList(noteAppNoteListDiv);
-        })
-
+            this.renderNameList(noteAppNoteListDiv);
+        });
     }
 
-    getRandomID(numberOfIDs :number){
+    getTenNames() {
+        let noteAppNoteListDiv = <HTMLElement>document.querySelector(".noteAppNoteListDiv");
+        this.nameList.splice(0, this.nameList.length);
+        const nameIdList = this.getRandomIDList(10);
+        from(nameIdList).subscribe(x => {
+            this.nameList.push(new Name(names[x]));
+            noteAppNoteListDiv.innerHTML = '';
+            this.renderNameList(noteAppNoteListDiv);
+        });
+    }
+
+    intervalGenerationSequence() {
+        let noteAppNoteListDiv = <HTMLElement>document.querySelector(".noteAppNoteListDiv");
+        this.nameList.splice(0, this.nameList.length);
+        return new Observable(sub => {
+            setTimeout(() => {
+                sub.next(Math.floor(Math.random()*21986))
+            }, Math.random()*1000);
+            setTimeout(() => {
+                sub.next(Math.floor(Math.random()*21986))
+            },  Math.random()*1000);
+            setTimeout(() => {
+                sub.next(Math.floor(Math.random()*21986))
+            },  Math.random()*1000);
+        }).subscribe(x => {
+            this.nameList.push(new Name(names[<number>x]));
+            noteAppNoteListDiv.innerHTML = '';
+            this.renderNameList(noteAppNoteListDiv);
+        })
+    }
+
+ 
+
+
+    getRandomIDList(numberOfIDs :number){
         //console.log(Math.floor(Math.random()*21986))
         var IDArray: number[]=[];
         for(var i = 0; i <numberOfIDs; i++){
             IDArray.push(Math.floor(Math.random()*21986));
         }
         return IDArray;
-        
-    
     }
 
-
-    getQuote() {
-        let quote: string;
-        return new Promise<string>((resolve, reject) => {
-            fetch('https://api.kanye.rest')
-                .then(res => res.json())
-                .then(data => {
-                    quote = data.quote;
-                    resolve(quote);
-                });
-        });
+    getRandomID(){
+      return Math.floor(Math.random()*21986);
     }
+
 
 }
 
