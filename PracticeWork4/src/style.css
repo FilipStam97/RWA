@@ -1,0 +1,63 @@
+.mainAppContainerDiv {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: auto;
+}
+
+.noteAppNoteListDiv {
+    flex-grow: 3;
+}
+
+.noteAppInputDiv{
+    background-color: #1EBCBB;
+    flex-grow: 1;
+    text-align: center;
+    padding: 5%;
+    min-height: 780px;
+    
+
+}
+
+.InputHead {
+    text-align: center;
+    color: white;
+}
+
+.InputDesc{
+    text-align: center;
+    color: white;
+    margin-top: 2%;
+}
+
+.TitleInputField {
+}
+
+.InputForm {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.containerInputFieldsDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+.noteTextSpan {
+    color: #1EBCBB;
+    font-weight: bold;
+    font-size: xx-large;
+    word-wrap: break-word;
+}
+
+.buttonDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+
+
+
