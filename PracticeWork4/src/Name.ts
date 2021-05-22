@@ -17,3 +17,17 @@ export class Name {
     }
 
 }
+
+export interface Movie {
+    name: string;
+    wiki: string;
+    characters: Array<Character>;
+    series: string;
+    released: string;
+}
+
+
+export interface Character {
+    name: string;
+    mainseries: string;
+}
