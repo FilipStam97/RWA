@@ -1,7 +1,7 @@
-import { NameGenerator } from "./NameGenerator";
+import { XMenator } from "./XMenator";
 
 
-let newApp = new NameGenerator();
+let newApp = new XMenator();
 newApp.renderApp(document.body);
 
 
