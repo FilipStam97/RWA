@@ -10,7 +10,7 @@
 }
 
 .noteAppInputDiv{
-    background-color: #1EBCBB;
+    background-color: #5e83ad;
     flex-grow: 1;
     text-align: center;
     padding: 5%;
@@ -44,17 +44,51 @@
     flex-direction: column;
 }
 
-.noteTextSpan {
-    color: #1EBCBB;
+.titleSpan {
+    color: #5e83ad;
     font-weight: bold;
     font-size: xx-large;
     word-wrap: break-word;
+}
+
+.anchorWiki {
+    color: #3366BB ;
+    font-weight: bold;
+    font-size: large;
+    word-wrap: break-word;
+    text-decoration: none;
+    
+}
+
+.anchorWiki:hover {
+    color: rgb(46, 178, 255) ;
+    text-decoration: underline;
+  
 }
 
 .buttonDiv {
     display: flex;
     flex-direction: column;
 }
+
+.listContainer {
+    margin: 1%;
+    padding: 2%;
+    border: solid;
+    border-color: #5e83ad;
+
+}
+
+.seriesSpan  {
+    font-weight: bold;
+    font-size: medium;
+}
+
+.releaseSpan {
+    font-weight: bold;
+    color: #0151a7;
+}
+
 
 
 

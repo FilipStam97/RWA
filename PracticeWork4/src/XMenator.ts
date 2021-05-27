@@ -76,13 +76,24 @@ export class XMenator {
     }
 
     renderMovie(host: HTMLElement, movie: Movie) {
-        let noteListContainer = createHtmlElement(host, "li", "noteListContainer mdl-list__item mdl-list__item--three-line");
+        let listContainer = createHtmlElement(host, "li", "listContainer");
 
-        let noteSpanContainer = createHtmlElement(noteListContainer, "span", "noteSpanContainer mdl-list__item-primary-content");
+        let spanContainer = createHtmlElement(listContainer, "span", "spanContainer");
 
-        let noteTextSpan = createHtmlElement(noteSpanContainer, "span", "noteTextSpan");
-        noteTextSpan.innerHTML = movie.name;
+        let titleSpan = createHtmlElement(spanContainer, "span", "titleSpan");
+        titleSpan.innerHTML = `${movie.name}<br>`;
 
+        let wikiSpan = createHtmlElement(spanContainer, "span", "wikiSpan");
+        let anchorWiki = createHtmlElement(wikiSpan, "a", "anchorWiki");
+        anchorWiki.innerHTML = `${movie.wiki}<br>`;
+        anchorWiki.setAttribute("href", `https://xmenmovies.fandom.com/wiki/${movie.wiki}`);
+        //https://xmenmovies.fandom.com/wiki/
+
+        let seriesSpan = createHtmlElement(spanContainer, "span", "seriesSpan");
+        seriesSpan.innerHTML = `Series: ${movie.series}<br>`;
+
+        let releaseSpan = createHtmlElement(spanContainer, "span", "releaseSpan");
+        releaseSpan.innerHTML = `Relese date: ${movie.released}<br>`;
     }
 
 }
