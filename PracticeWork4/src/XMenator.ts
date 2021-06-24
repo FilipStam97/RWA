@@ -98,6 +98,10 @@ export class XMenator {
     }
 
 }
+//notes dok gledam predavanja
+//forkJoin, zip, combineLatest, merge
+//express , types za express, komanda za debug servera
+//nodemonitor tj. nodemon
 
 export function createHtmlElement(host: HTMLElement, element: string, className: string) {
     let hostElement = host;
