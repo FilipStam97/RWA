@@ -62,6 +62,7 @@ export class XMenator {
     }
 
     handleMovieInput() {
+        // pogledaj interesantne operatore scan, pairwise, distinct
         let noteAppNoteListDiv = <HTMLElement>document.querySelector(".noteAppNoteListDiv");
         let input = <HTMLElement>document.querySelector(".inputMain");
         fromEvent(input, "input").pipe(
