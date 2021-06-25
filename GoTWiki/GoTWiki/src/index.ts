@@ -1,6 +1,6 @@
-import { XMenator } from "./XMenator";
+import { WikiApp } from "./WikiApp";
 
-let newApp = new XMenator();
+let newApp = new WikiApp();
 newApp.renderApp(document.body);
 
 

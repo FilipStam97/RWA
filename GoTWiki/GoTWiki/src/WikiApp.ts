@@ -1,16 +1,17 @@
 import { Movie, Character } from "./Models";
+import { createHtmlElement } from "./DOMbuilder";
 import { catchError, debounceTime, filter, map, retry, switchMap, take, takeUntil } from "rxjs/operators"
 import { from, interval, of, range, Observable, Subject, fromEvent } from "rxjs";
 const FETCH_URI = "http://localhost:3000/films";
 
-export class XMenator {
+export class WikiApp {
     constructor() {
     }
 
     renderApp(body: HTMLElement) {
+        renderHeader(body,headerContentList);
         let mainAppContainerDiv = createHtmlElement(body, "div", "mainAppContainerDiv");
 
-        renderHeader(body,headerContentList);
 
 
     }
@@ -50,29 +51,8 @@ export class XMenator {
 //express , types za express, komanda za debug servera
 //nodemonitor tj. nodemon
 
-export function createHtmlElement(host: HTMLElement, element: string, className: string) {
-    let hostElement = host;
-    let childElement = document.createElement(element);
-    childElement.className = className;
-    hostElement.appendChild(childElement);
-    return <HTMLElement>childElement;
-}
 
-export function createHtmlInputElement(host: HTMLElement, element: string, className: string) {
-    let hostElement = host;
-    let childElement = document.createElement(element);
-    childElement.className = className;
-    hostElement.appendChild(childElement);
-    return <HTMLInputElement>childElement;
-}
 
-export function createHtmlButtonElement(host: HTMLElement, element: string, className: string) {
-    let hostElement = host;
-    let childElement = document.createElement(element);
-    childElement.className = className;
-    hostElement.appendChild(childElement);
-    return <HTMLButtonElement>childElement;
-}
 
 export function renderHeader(host: HTMLElement, contentElements: Array<any>){
     let hostElement = host;
@@ -82,14 +62,14 @@ export function renderHeader(host: HTMLElement, contentElements: Array<any>){
     let containerWrapper = createHtmlElement(nav,"div","container-fluid");
 
     //Toggle button
-    let toggleButton = createHtmlButtonElement(containerWrapper,"button","navbar-toggler");
+    let toggleButton = <HTMLButtonElement>createHtmlElement(containerWrapper,"button","navbar-toggler");
     toggleButton.type="button";
     toggleButton.setAttribute("data-mdb-toggle", "collapse");
-    toggleButton.setAttribute("data-mdb-target", "#navbarSupportedConten");
+    toggleButton.setAttribute("data-mdb-target", "#navbarSupportedContent");
     toggleButton.setAttribute("aria-controls", "navbarSupportedContent");
     toggleButton.setAttribute("aria-expanded", "false");
     toggleButton.setAttribute("aria-label", "Toggle navigation");
-    let toggleButtonIcon = createHtmlElement(toggleButton,"i","fas fa-bars");
+    let toggleButtonIcon = <HTMLImageElement>createHtmlElement(toggleButton,"i","fas fa-bars");
 
 
     //Collapsible wrapper
@@ -105,34 +85,32 @@ export function renderHeader(host: HTMLElement, contentElements: Array<any>){
     let navList = createHtmlElement(collapsibleWrapperDiv, "ul","navbar-nav me-auto mb-2 mb-lg-0");
     contentElements.forEach(element => {
         let navListElement = createHtmlElement(navList,"li","nav-item");
-        let navListElementLink = createHtmlElement(navListElement,"a","nav-link");
+        let navListElementLink = <HTMLAnchorElement>createHtmlElement(navListElement,"a","nav-link");
         navListElementLink.innerHTML=element.title;
-        navListElementLink.setAttribute("href","");
+        navListElementLink.href=""; 
         
     });
 
     //Right elements
     let rightElementContainerDiv = createHtmlElement(containerWrapper,"div","d-flex align-items-center");
-    let searchBar = createHtmlInputElement(rightElementContainerDiv, "input", "form-control rounded");
+    let searchBar = <HTMLInputElement>createHtmlElement(rightElementContainerDiv, "input", "form-control rounded");
     searchBar.type="search";
     searchBar.placeholder="Search";
 
     let iconSpan = createHtmlElement(rightElementContainerDiv,"span","input-group-text border-0");
     let searchIcon = createHtmlElement(iconSpan,"i","fas fa-search");
 
-
-
 }
 
 const headerContentList = [
     {
-        title: "element1"
+        title: "Characters"
     },
     {
-        title: "element2"
+        title: "Episodes"
     },
     {
-        title: "element3"
+        title: "Locations"
     },
 
 ]
