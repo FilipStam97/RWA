@@ -112,5 +112,8 @@ const headerContentList = [
     {
         title: "Locations"
     },
+    {
+        title: "Episode Transcripts"
+    },
 
 ]
