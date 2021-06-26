@@ -9,8 +9,9 @@ export class WikiApp {
     }
 
     renderApp(body: HTMLElement) {
-        renderHeader(body,headerContentList);
+        this.renderHeader(body,headerContentList);
         let mainAppContainerDiv = createHtmlElement(body, "div", "mainAppContainerDiv");
+        
 
 
 
@@ -43,7 +44,77 @@ export class WikiApp {
         })
     }
 
+    renderHeader(host: HTMLElement, contentElements: Array<any>){
+        let hostElement = host;
+        //Navbar
+        let nav = createHtmlElement(hostElement,"nav","navbar navbar-expand-lg navbar-light bg-light");
+        //div wrapper
+        let containerWrapper = createHtmlElement(nav,"div","container-fluid");
+    
+        //Toggle button
+        let toggleButton = <HTMLButtonElement>createHtmlElement(containerWrapper,"button","navbar-toggler");
+        toggleButton.type="button";
+        toggleButton.setAttribute("data-mdb-toggle", "collapse");
+        toggleButton.setAttribute("data-mdb-target", "#navbarSupportedContent");
+        toggleButton.setAttribute("aria-controls", "navbarSupportedContent");
+        toggleButton.setAttribute("aria-expanded", "false");
+        toggleButton.setAttribute("aria-label", "Toggle navigation");
+        let toggleButtonIcon = <HTMLImageElement>createHtmlElement(toggleButton,"i","fas fa-bars");
+    
+    
+        //Collapsible wrapper
+        let collapsibleWrapperDiv = createHtmlElement(containerWrapper,"div","collapse navbar-collapse");
+        collapsibleWrapperDiv.id="navbarSupportedContent";
+    
+        // Nav brand
+        let navBrand = createHtmlElement(collapsibleWrapperDiv,"a","navbar-brand mt-2 mt-lg-0");
+        let navBrandName = createHtmlElement(navBrand,"span","navBrandName");
+        navBrandName.innerHTML="GoT Wiki";
+    
+        //Left link content
+        let navList = createHtmlElement(collapsibleWrapperDiv, "ul","navbar-nav me-auto mb-2 mb-lg-0");
+        contentElements.forEach(element => {
+            let navListElement = createHtmlElement(navList,"li","nav-item");
+            let navListElementLink = <HTMLAnchorElement>createHtmlElement(navListElement,"a","navElement nav-link");
+            navListElementLink.innerHTML=element.title;
+            navListElementLink.onclick = () => {
+                this.renderPage(element.title);
+            };
+            
+        });
+    
+        //Right elements
+        let rightElementContainerDiv = createHtmlElement(containerWrapper,"div","d-flex align-items-center");
+        let searchBar = <HTMLInputElement>createHtmlElement(rightElementContainerDiv, "input", "form-control rounded");
+        searchBar.type="search";
+        searchBar.placeholder="Search";
+    
+        let iconSpan = createHtmlElement(rightElementContainerDiv,"span","input-group-text border-0");
+        let searchIcon = createHtmlElement(iconSpan,"i","fas fa-search");
+    
+    }
 
+    renderPage(pageTitle: string){
+        let mainAppContainerDiv = <HTMLElement>document.querySelector(".mainAppContainerDiv");
+        switch(pageTitle) {
+            case "Characters" : {
+                console.log(pageTitle);
+                break;
+            }
+            case "Episodes" : {
+                console.log(pageTitle);
+                break;
+            }
+            case "Locations" : {
+                console.log(pageTitle);
+                break;
+            }
+            default: {
+                console.log("Error page does not exist");
+                break;
+            }
+        }
+    }
 
 }
 //notes dok gledam predavanja
@@ -54,53 +125,7 @@ export class WikiApp {
 
 
 
-export function renderHeader(host: HTMLElement, contentElements: Array<any>){
-    let hostElement = host;
-    //Navbar
-    let nav = createHtmlElement(hostElement,"nav","navbar navbar-expand-lg navbar-light bg-light");
-    //div wrapper
-    let containerWrapper = createHtmlElement(nav,"div","container-fluid");
 
-    //Toggle button
-    let toggleButton = <HTMLButtonElement>createHtmlElement(containerWrapper,"button","navbar-toggler");
-    toggleButton.type="button";
-    toggleButton.setAttribute("data-mdb-toggle", "collapse");
-    toggleButton.setAttribute("data-mdb-target", "#navbarSupportedContent");
-    toggleButton.setAttribute("aria-controls", "navbarSupportedContent");
-    toggleButton.setAttribute("aria-expanded", "false");
-    toggleButton.setAttribute("aria-label", "Toggle navigation");
-    let toggleButtonIcon = <HTMLImageElement>createHtmlElement(toggleButton,"i","fas fa-bars");
-
-
-    //Collapsible wrapper
-    let collapsibleWrapperDiv = createHtmlElement(containerWrapper,"div","collapse navbar-collapse");
-    collapsibleWrapperDiv.id="navbarSupportedContent";
-
-    // Nav brand
-    let navBrand = createHtmlElement(collapsibleWrapperDiv,"a","navbar-brand mt-2 mt-lg-0");
-    let navBrandName = createHtmlElement(navBrand,"span","navBrandName");
-    navBrandName.innerHTML="GoT Wiki";
-
-    //Left link content
-    let navList = createHtmlElement(collapsibleWrapperDiv, "ul","navbar-nav me-auto mb-2 mb-lg-0");
-    contentElements.forEach(element => {
-        let navListElement = createHtmlElement(navList,"li","nav-item");
-        let navListElementLink = <HTMLAnchorElement>createHtmlElement(navListElement,"a","nav-link");
-        navListElementLink.innerHTML=element.title;
-        navListElementLink.href=""; 
-        
-    });
-
-    //Right elements
-    let rightElementContainerDiv = createHtmlElement(containerWrapper,"div","d-flex align-items-center");
-    let searchBar = <HTMLInputElement>createHtmlElement(rightElementContainerDiv, "input", "form-control rounded");
-    searchBar.type="search";
-    searchBar.placeholder="Search";
-
-    let iconSpan = createHtmlElement(rightElementContainerDiv,"span","input-group-text border-0");
-    let searchIcon = createHtmlElement(iconSpan,"i","fas fa-search");
-
-}
 
 const headerContentList = [
     {
@@ -111,9 +136,6 @@ const headerContentList = [
     },
     {
         title: "Locations"
-    },
-    {
-        title: "Episode Transcripts"
     },
 
 ]
