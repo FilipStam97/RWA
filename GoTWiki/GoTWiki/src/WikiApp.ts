@@ -1,5 +1,6 @@
 import { Movie, Character } from "./Models";
 import { createHtmlElement } from "./DOMbuilder";
+import { renderCharactersPage } from "./CharactersPage";
 import { catchError, debounceTime, filter, map, retry, switchMap, take, takeUntil } from "rxjs/operators"
 import { from, interval, of, range, Observable, Subject, fromEvent } from "rxjs";
 const FETCH_URI = "http://localhost:3000/films";
@@ -11,10 +12,7 @@ export class WikiApp {
     renderApp(body: HTMLElement) {
         this.renderHeader(body,headerContentList);
         let mainAppContainerDiv = createHtmlElement(body, "div", "mainAppContainerDiv");
-        
-
-
-
+        this.renderHomePage(mainAppContainerDiv);
     }
 
     getMovieByName(movieName: string): Observable<Movie[]> {
@@ -45,9 +43,8 @@ export class WikiApp {
     }
 
     renderHeader(host: HTMLElement, contentElements: Array<any>){
-        let hostElement = host;
         //Navbar
-        let nav = createHtmlElement(hostElement,"nav","navbar navbar-expand-lg navbar-light bg-light");
+        let nav = createHtmlElement(host,"nav","navbar navbar-expand-lg navbar-light bg-light");
         //div wrapper
         let containerWrapper = createHtmlElement(nav,"div","container-fluid");
     
@@ -70,6 +67,11 @@ export class WikiApp {
         let navBrand = createHtmlElement(collapsibleWrapperDiv,"a","navbar-brand mt-2 mt-lg-0");
         let navBrandName = createHtmlElement(navBrand,"span","navBrandName");
         navBrandName.innerHTML="GoT Wiki";
+        navBrandName.onclick = () => {
+            let mainAppContainerDiv = <HTMLElement>document.querySelector(".mainAppContainerDiv");
+            mainAppContainerDiv.innerHTML="";
+            this.renderHomePage(mainAppContainerDiv);
+        };
     
         //Left link content
         let navList = createHtmlElement(collapsibleWrapperDiv, "ul","navbar-nav me-auto mb-2 mb-lg-0");
@@ -78,6 +80,7 @@ export class WikiApp {
             let navListElementLink = <HTMLAnchorElement>createHtmlElement(navListElement,"a","navElement nav-link");
             navListElementLink.innerHTML=element.title;
             navListElementLink.onclick = () => {
+                
                 this.renderPage(element.title);
             };
             
@@ -94,11 +97,16 @@ export class WikiApp {
     
     }
 
+    renderHomePage(host:HTMLElement) {
+        host.innerHTML="HOOOOOOOOOOOMEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
+    }
+
     renderPage(pageTitle: string){
         let mainAppContainerDiv = <HTMLElement>document.querySelector(".mainAppContainerDiv");
+        mainAppContainerDiv.innerHTML="";
         switch(pageTitle) {
             case "Characters" : {
-                console.log(pageTitle);
+                renderCharactersPage(mainAppContainerDiv);
                 break;
             }
             case "Episodes" : {

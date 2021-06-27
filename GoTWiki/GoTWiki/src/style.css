@@ -2,6 +2,15 @@
     font-size: x-large;
     color: black;
 }
+
+.navBrandName:hover {
+    cursor: pointer;
+}
+
+.nav-item:active {
+    background-color: silver;
+}
+
 body{
      background-image: url('./assets/westerosMap2.png'); 
      height: 100vh;
@@ -10,8 +19,10 @@ body{
     color: black;
     cursor: pointer;
 }
-.navElement:active{
-    font-weight: bolder;
+
+.mainAppContainerDiv{
+    display: flex;
+    flex-direction: row;
 }
 
 
