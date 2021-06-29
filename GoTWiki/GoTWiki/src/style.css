@@ -25,6 +25,25 @@ body{
     flex-direction: row;
 }
 
+.sideNavDiv{
+    height: 100%;
+    width: 300px;
+    position: fixed;
+    background-color: whitesmoke;
+    padding-top: 20px;
+    padding-left: 1%;
+    padding-right: 1%;
+
+}
+
+.characterListDiv{
+    margin-left: 300px;
+    padding-top: 20px;
+    padding-left: 1%;
+}
+
+
+
 
 
 

@@ -16,7 +16,7 @@ export function renderSideNav(host: HTMLElement){
 }
 
 export function renderCharactersList(host: HTMLElement) {
-    host.innerHTML="ZLAAAAAAAAAAA";
+    host.innerHTML="ZLAAAAAAAAAAAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 
 
 }
