@@ -33,6 +33,8 @@ body{
     padding-top: 20px;
     padding-left: 1%;
     padding-right: 1%;
+    overflow: scroll;
+    padding-bottom: 80px;
 
 }
 
@@ -41,6 +43,23 @@ body{
     padding-top: 20px;
     padding-left: 1%;
 }
+
+.categorieTitle{
+    font-size: 18px;
+    font-weight: 500;
+    color: black;
+}
+
+.checkBoxLabel:hover{
+    text-decoration: underline;
+}
+
+.categorieElementsCollapseDiv {
+    margin-top: 0 !important;
+}
+
+
+
 
 
 
