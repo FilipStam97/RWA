@@ -1,29 +1,36 @@
-import { identity } from "rxjs";
+import { identity, BehaviorSubject, fromEvent, combineLatest, observable, Observable,  } from "rxjs";
+import { map } from "rxjs/operators";
 import { createHtmlElement, FILTER_CONST, renderCheckBox } from "./DOMbuilder";
+import { FilterObject } from "./Models";
+const NUM_OF_VISABLE_OPTIONS = 4;
 
-export function renderCharactersPage(host: HTMLElement){
+export class CharactersPage{
+    filterList: FilterObject[];
+
+    constructor() {
+    }
+
+renderCharactersPage(host: HTMLElement){
 
     let sideNavDiv = createHtmlElement(host, "div", "sideNavDiv");
-    renderSideNav(sideNavDiv);
+    this.renderSideNav(sideNavDiv);
 
     let characterListDiv = createHtmlElement(host,"div", "characterListDiv");
-    renderCharactersList(characterListDiv);
+    this.renderCharactersListSection(characterListDiv);
+   
 
 }
 
-export function renderSideNav(host: HTMLElement){
-    renderCheckboxCategories(host, FILTER_CONST.elementArray);
-   // host.innerHTML="BLLLLLLLLLLLLLLLLLLAAA";
-
+renderSideNav(host: HTMLElement){
+    this.renderCheckboxCategories(host, FILTER_CONST.elementArray);
 }
 
-export function renderCharactersList(host: HTMLElement) {
+renderCharactersListSection(host: HTMLElement) {
     host.innerHTML="ZLAAAAAAAAAAAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 
-
 }
 
-export function renderCheckboxCategories(host: HTMLElement, categorieList: Array<any>){
+renderCheckboxCategories(host: HTMLElement, categorieList: Array<any>){
     categorieList.forEach(cetegorie => {
         let cetegorieDiv = createHtmlElement(host,"div", "cetegorieDiv");
         let categorieTitle = createHtmlElement(cetegorieDiv,"span", "categorieTitle");
@@ -33,7 +40,7 @@ export function renderCheckboxCategories(host: HTMLElement, categorieList: Array
         let categorieElementsCollapseDiv = createHtmlElement(cetegorieDiv, "div", "categorieElementsCollapseDiv collapse mt-3");
         categorieElementsCollapseDiv.id=cetegorie.name;
 
-        if(cetegorie.values.length > 4) {
+        if(cetegorie.values.length > NUM_OF_VISABLE_OPTIONS) {
 
         let anchorCollapseButton = <HTMLAnchorElement>createHtmlElement(cetegorieDiv, "a", "anchorCollapseButton");
         anchorCollapseButton.setAttribute("data-mdb-toggle", "collapse");
@@ -54,18 +61,38 @@ export function renderCheckboxCategories(host: HTMLElement, categorieList: Array
                 anchorIcon.innerHTML="Show more";
             } 
         }
-   
         }
         cetegorie.values.sort().forEach((value: string, index: number) => {
-            if(index<4){
+            if(index < NUM_OF_VISABLE_OPTIONS){
                 renderCheckBox(categorieElementsWrapperDiv,value,cetegorie.name);
             }
             else{
                 renderCheckBox(categorieElementsCollapseDiv,value,cetegorie.name);
-
             }
            
         });
 
+        // let filterSubject = new BehaviorSubject(cetegorieDiv).pipe(
+        //     map(() => (<HTMLInputElement>ev.target).value),
+        //     );
+        //     filterSubject.subscribe((el) => {
+        //         console.log(el);
+        //     })
+        
+    fromEvent(cetegorieDiv, "input").pipe(
+        map((ev: InputEvent) => ({
+            filterName: (<HTMLInputElement>ev.target).name,
+            inputValue: (<HTMLInputElement>ev.target).value, 
+            checked: (<HTMLInputElement>ev.target).checked
+        }),
+        )).subscribe((el) => {
+            console.log(el);
+        });
+
+
+
     });
+
+
+}
 }

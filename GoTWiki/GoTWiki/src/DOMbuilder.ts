@@ -1,3 +1,5 @@
+import { BehaviorSubject, fromEvent } from "rxjs";
+import { map } from "rxjs/operators";
 
 export function createHtmlElement(host: HTMLElement, element: string, className: string) {
     let childElement = document.createElement(element);
@@ -11,10 +13,19 @@ export function renderCheckBox(host: HTMLElement, checkBoxItem : string, checkBo
     let checkBoxInput = <HTMLInputElement>createHtmlElement(checkBoxDiv,"input", "checkBoxInput form-check-input");
     checkBoxInput.type="checkbox";
     checkBoxInput.value=checkBoxItem;
+    checkBoxInput.name=checkBoxGroupName;
     checkBoxInput.id=checkBoxItem+checkBoxGroupName;
     let checkBoxLabel = <HTMLLabelElement>createHtmlElement(checkBoxDiv,"label", "checkBoxLabel form-check-label");
     checkBoxLabel.setAttribute("for", checkBoxItem+checkBoxGroupName);
     checkBoxLabel.innerHTML= checkBoxItem;
+
+    // fromEvent(checkBoxInput, "input").pipe(
+    //     map((ev: InputEvent) => (<HTMLInputElement>ev.target).value),
+    //     ).subscribe((el) => {
+    //         console.log(el);
+    //     });
+
+
 
 }
 
