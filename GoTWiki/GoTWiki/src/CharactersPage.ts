@@ -5,10 +5,18 @@ import { FilterObject } from "./Models";
 const NUM_OF_VISABLE_OPTIONS = 4;
 
 export class CharactersPage{
-    filterList: FilterObject[];
+    filterList: Array<FilterObject>;
+    filterMonitor: BehaviorSubject<Array<FilterObject>>
 
     constructor() {
+        this.filterList = new Array();
+        this.filterMonitor= new BehaviorSubject(this.filterList);
     }
+
+returnIndexOfElementByName(name :string){
+    return this.filterList.findIndex(function(filterObject) { 
+        return filterObject.name == name})
+}
 
 renderCharactersPage(host: HTMLElement){
 
@@ -86,7 +94,8 @@ renderCheckboxCategories(host: HTMLElement, categorieList: Array<any>){
             checked: (<HTMLInputElement>ev.target).checked
         }),
         )).subscribe((el) => {
-            console.log(el);
+            this.updateFilterList(el);
+           // console.log(el);
         });
 
 
@@ -95,4 +104,35 @@ renderCheckboxCategories(host: HTMLElement, categorieList: Array<any>){
 
 
 }
+
+updateFilterList(checkboxSelectObject :any){
+    if(this.returnIndexOfElementByName(checkboxSelectObject.filterName) == -1){
+        this.filterList.push({
+            name: checkboxSelectObject.filterName,
+            values: [checkboxSelectObject.inputValue]
+        });
+    }
+    else {
+        if(checkboxSelectObject.checked){
+            this.filterList[this.returnIndexOfElementByName(checkboxSelectObject.filterName)]
+                .values.push(checkboxSelectObject.inputValue);
+        }
+        else{
+            const index = this.returnIndexOfElementByName(checkboxSelectObject.filterName);
+            this.filterList[index].values = this.filterList[index]
+                .values.filter(value => value != <string>(checkboxSelectObject.inputValue));
+            
+            if(this.filterList[index].values.length == 0){
+                this.filterList.splice(index,1);
+            }
+            
+
+        }
+    }
+    //console.log(this.filterList);
+    this.filterMonitor.subscribe(
+        x => console.log(x)
+    );
+}
+
 }
