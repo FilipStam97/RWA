@@ -62,7 +62,6 @@ export function renderCheckboxCategories(host: HTMLElement, categorieList: Array
             }
             else{
                 renderCheckBox(categorieElementsCollapseDiv,value,cetegorie.name);
-
             }
            
         });
