@@ -13,3 +13,8 @@ export interface Character {
     name: string;
     mainseries: string;
 }
+
+export interface FilterObject {
+    name: string;
+    values: string[];
+}

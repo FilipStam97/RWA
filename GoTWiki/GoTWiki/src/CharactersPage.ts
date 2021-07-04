@@ -1,29 +1,44 @@
-import { identity } from "rxjs";
+import { identity, BehaviorSubject, fromEvent, combineLatest, observable, Observable,  } from "rxjs";
+import { map } from "rxjs/operators";
 import { createHtmlElement, FILTER_CONST, renderCheckBox } from "./DOMbuilder";
+import { FilterObject } from "./Models";
+const NUM_OF_VISABLE_OPTIONS = 4;
 
-export function renderCharactersPage(host: HTMLElement){
+export class CharactersPage{
+    filterList: Array<FilterObject>;
+    filterMonitor: BehaviorSubject<Array<FilterObject>>
+
+    constructor() {
+        this.filterList = new Array();
+        this.filterMonitor= new BehaviorSubject(this.filterList);
+    }
+
+returnIndexOfElementByName(name :string){
+    return this.filterList.findIndex(function(filterObject) { 
+        return filterObject.name == name})
+}
+
+renderCharactersPage(host: HTMLElement){
 
     let sideNavDiv = createHtmlElement(host, "div", "sideNavDiv");
-    renderSideNav(sideNavDiv);
+    this.renderSideNav(sideNavDiv);
 
     let characterListDiv = createHtmlElement(host,"div", "characterListDiv");
-    renderCharactersList(characterListDiv);
+    this.renderCharactersListSection(characterListDiv);
+   
 
 }
 
-export function renderSideNav(host: HTMLElement){
-    renderCheckboxCategories(host, FILTER_CONST.elementArray);
-   // host.innerHTML="BLLLLLLLLLLLLLLLLLLAAA";
-
+renderSideNav(host: HTMLElement){
+    this.renderCheckboxCategories(host, FILTER_CONST.elementArray);
 }
 
-export function renderCharactersList(host: HTMLElement) {
+renderCharactersListSection(host: HTMLElement) {
     host.innerHTML="ZLAAAAAAAAAAAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 
-
 }
 
-export function renderCheckboxCategories(host: HTMLElement, categorieList: Array<any>){
+renderCheckboxCategories(host: HTMLElement, categorieList: Array<any>){
     categorieList.forEach(cetegorie => {
         let cetegorieDiv = createHtmlElement(host,"div", "cetegorieDiv");
         let categorieTitle = createHtmlElement(cetegorieDiv,"span", "categorieTitle");
@@ -33,7 +48,7 @@ export function renderCheckboxCategories(host: HTMLElement, categorieList: Array
         let categorieElementsCollapseDiv = createHtmlElement(cetegorieDiv, "div", "categorieElementsCollapseDiv collapse mt-3");
         categorieElementsCollapseDiv.id=cetegorie.name;
 
-        if(cetegorie.values.length > 4) {
+        if(cetegorie.values.length > NUM_OF_VISABLE_OPTIONS) {
 
         let anchorCollapseButton = <HTMLAnchorElement>createHtmlElement(cetegorieDiv, "a", "anchorCollapseButton");
         anchorCollapseButton.setAttribute("data-mdb-toggle", "collapse");
@@ -54,10 +69,9 @@ export function renderCheckboxCategories(host: HTMLElement, categorieList: Array
                 anchorIcon.innerHTML="Show more";
             } 
         }
-   
         }
         cetegorie.values.sort().forEach((value: string, index: number) => {
-            if(index<4){
+            if(index < NUM_OF_VISABLE_OPTIONS){
                 renderCheckBox(categorieElementsWrapperDiv,value,cetegorie.name);
             }
             else{
@@ -66,5 +80,59 @@ export function renderCheckboxCategories(host: HTMLElement, categorieList: Array
            
         });
 
+        // let filterSubject = new BehaviorSubject(cetegorieDiv).pipe(
+        //     map(() => (<HTMLInputElement>ev.target).value),
+        //     );
+        //     filterSubject.subscribe((el) => {
+        //         console.log(el);
+        //     })
+        
+    fromEvent(cetegorieDiv, "input").pipe(
+        map((ev: InputEvent) => ({
+            filterName: (<HTMLInputElement>ev.target).name,
+            inputValue: (<HTMLInputElement>ev.target).value, 
+            checked: (<HTMLInputElement>ev.target).checked
+        }),
+        )).subscribe((el) => {
+            this.updateFilterList(el);
+           // console.log(el);
+        });
+
+
+
     });
+
+
+}
+
+updateFilterList(checkboxSelectObject :any){
+    if(this.returnIndexOfElementByName(checkboxSelectObject.filterName) == -1){
+        this.filterList.push({
+            name: checkboxSelectObject.filterName,
+            values: [checkboxSelectObject.inputValue]
+        });
+    }
+    else {
+        if(checkboxSelectObject.checked){
+            this.filterList[this.returnIndexOfElementByName(checkboxSelectObject.filterName)]
+                .values.push(checkboxSelectObject.inputValue);
+        }
+        else{
+            const index = this.returnIndexOfElementByName(checkboxSelectObject.filterName);
+            this.filterList[index].values = this.filterList[index]
+                .values.filter(value => value != <string>(checkboxSelectObject.inputValue));
+            
+            if(this.filterList[index].values.length == 0){
+                this.filterList.splice(index,1);
+            }
+            
+
+        }
+    }
+    //console.log(this.filterList);
+    this.filterMonitor.subscribe(
+        x => console.log(x)
+    );
+}
+
 }

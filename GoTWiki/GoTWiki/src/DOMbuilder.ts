@@ -1,3 +1,5 @@
+import { BehaviorSubject, fromEvent } from "rxjs";
+import { map } from "rxjs/operators";
 
 export function createHtmlElement(host: HTMLElement, element: string, className: string) {
     let childElement = document.createElement(element);
@@ -11,13 +13,68 @@ export function renderCheckBox(host: HTMLElement, checkBoxItem : string, checkBo
     let checkBoxInput = <HTMLInputElement>createHtmlElement(checkBoxDiv,"input", "checkBoxInput form-check-input");
     checkBoxInput.type="checkbox";
     checkBoxInput.value=checkBoxItem;
+    checkBoxInput.name=checkBoxGroupName;
     checkBoxInput.id=checkBoxItem+checkBoxGroupName;
     let checkBoxLabel = <HTMLLabelElement>createHtmlElement(checkBoxDiv,"label", "checkBoxLabel form-check-label");
     checkBoxLabel.setAttribute("for", checkBoxItem+checkBoxGroupName);
     checkBoxLabel.innerHTML= checkBoxItem;
 
+    // fromEvent(checkBoxInput, "input").pipe(
+    //     map((ev: InputEvent) => (<HTMLInputElement>ev.target).value),
+    //     ).subscribe((el) => {
+    //         console.log(el);
+    //     });
+
+
+
 }
 
+
+
+export const SEASONS_CONST = {
+    elementArray: [
+        {
+            title:"Season 1",
+            value: 1,
+            color: "#586551"
+        },
+        {
+            title:"Season 2",
+            value: 2,
+            color: "#8d6940"
+        },
+        {
+            title:"Season 3",
+            value: 3,
+            color: "#854141"
+        },
+        {
+            title:"Season 4",
+            value: 4,
+            color: "#42798e"
+        },
+        {
+            title:"Season 5",
+            value: 5,
+            color: "#725a7e"
+        },
+        {
+            title:"Season 6",
+            value: 6,
+            color: "#4e6f72"
+        },    
+        {
+            title:"Season 7",
+            value: 7,
+            color: "#4c4f62"
+        },    
+        {
+            title:"Season 8",
+            value: 8,
+            color: "#0e0e11"
+        },
+    ]
+}
 
 
 

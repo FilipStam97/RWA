@@ -1,11 +1,15 @@
-import { Movie, Character } from "./Models";
+import { Movie, Character} from "./Models";
 import { createHtmlElement } from "./DOMbuilder";
-import { renderCharactersPage } from "./CharactersPage";
+import { CharactersPage } from "./CharactersPage";
 import { catchError, debounceTime, filter, map, retry, switchMap, take, takeUntil } from "rxjs/operators"
 import { from, interval, of, range, Observable, Subject, fromEvent } from "rxjs";
+import { EpisodesPage } from "./EpisodesPage";
 const FETCH_URI = "http://localhost:3000/films";
 
 export class WikiApp {
+    charactersPage: CharactersPage;
+    episodesPage: EpisodesPage;
+    
     constructor() {
     }
 
@@ -99,6 +103,13 @@ export class WikiApp {
 
     renderHomePage(host:HTMLElement) {
         host.innerHTML="HOOOOOOOOOOOMEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
+        // this.FilterObject.filters.find(element => element.name == "royal").values.push("true");
+        // console.log(this.FilterObject);
+        // this.FilterObject.filters.find(element => element.name == "killedBy").values.push("Arya");
+        // console.log(this.FilterObject);
+        // this.FilterObject.filters.find(element => element.name == "killedBy").values.push("Jon Snow");
+        // console.log(this.FilterObject);
+
     }
 
     renderPage(pageTitle: string){
@@ -106,11 +117,13 @@ export class WikiApp {
         mainAppContainerDiv.innerHTML="";
         switch(pageTitle) {
             case "Characters" : {
-                renderCharactersPage(mainAppContainerDiv);
+                this.charactersPage=new CharactersPage();
+                this.charactersPage.renderCharactersPage(mainAppContainerDiv);
                 break;
             }
             case "Episodes" : {
-                console.log(pageTitle);
+                this.episodesPage = new EpisodesPage();
+                this.episodesPage.renderEpisodesPage(mainAppContainerDiv);
                 break;
             }
             case "Locations" : {
@@ -118,7 +131,7 @@ export class WikiApp {
                 break;
             }
             default: {
-                console.log("Error page does not exist");
+                console.log("Error: page does not exist");
                 break;
             }
         }
