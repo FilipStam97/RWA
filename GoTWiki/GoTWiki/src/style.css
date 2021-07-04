@@ -57,6 +57,17 @@ body{
 .categorieElementsCollapseDiv {
     margin-top: 0 !important;
 }
+ .controlsDiv {
+     margin: 10%;
+ }
+
+ .dropdown-item:hover {
+    cursor: pointer;
+ }
+
+
+.dropDownButton {
+}
 
 
 

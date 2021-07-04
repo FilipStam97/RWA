@@ -3,10 +3,12 @@ import { createHtmlElement } from "./DOMbuilder";
 import { CharactersPage } from "./CharactersPage";
 import { catchError, debounceTime, filter, map, retry, switchMap, take, takeUntil } from "rxjs/operators"
 import { from, interval, of, range, Observable, Subject, fromEvent } from "rxjs";
+import { EpisodesPage } from "./EpisodesPage";
 const FETCH_URI = "http://localhost:3000/films";
 
 export class WikiApp {
     charactersPage: CharactersPage;
+    episodesPage: EpisodesPage;
     
     constructor() {
     }
@@ -120,7 +122,8 @@ export class WikiApp {
                 break;
             }
             case "Episodes" : {
-                console.log(pageTitle);
+                this.episodesPage = new EpisodesPage();
+                this.episodesPage.renderEpisodesPage(mainAppContainerDiv);
                 break;
             }
             case "Locations" : {
@@ -128,7 +131,7 @@ export class WikiApp {
                 break;
             }
             default: {
-                console.log("Error page does not exist");
+                console.log("Error: page does not exist");
                 break;
             }
         }
