@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const CharacterSchema = mongoose.Schema({
     characterName: String,
-    houseName: String,
+    houseName: [String],
     characterImageThumb: String,
     characterImageFull: String,
     characterLink: String,
