@@ -34,7 +34,7 @@ function createFilterObject(reqObject) {
 
 
 router.get('/', (req, res) => {
-    res.send("kurac");
+    res.send("Characfters");
 });
 
 router.get('/:characterID', async (req, res) => {

@@ -1,7 +1,10 @@
-import { identity, BehaviorSubject, fromEvent, combineLatest, observable, Observable,  } from "rxjs";
-import { map } from "rxjs/operators";
+import { identity, BehaviorSubject, fromEvent, combineLatest, observable, Observable} from "rxjs";
+import {ajax} from "rxjs/ajax";
+import { filter, map } from "rxjs/operators";
 import { createHtmlElement, FILTER_CONST, renderCheckBox } from "./DOMbuilder";
 import { FilterObject } from "./Models";
+import { SERVER_CONNECTION } from "./DOMbuilder";
+
 const NUM_OF_VISABLE_OPTIONS = 4;
 
 export class CharactersPage{
@@ -31,6 +34,24 @@ renderCharactersPage(host: HTMLElement){
 
 renderSideNav(host: HTMLElement){
     this.renderCheckboxCategories(host, FILTER_CONST.elementArray);
+    let acceptButton = <HTMLButtonElement>createHtmlElement(host, "button", "acceptButton btn btn-outline-primary btn-rounded");
+    acceptButton.type="button";
+    acceptButton.setAttribute("data-mdb-ripple-color","dark");
+    acceptButton.innerHTML = "ACCEPT FILTERS";
+    acceptButton.onclick = () => {
+        const filters = {
+            "filterArray" : this.filterList
+        }
+        
+        ajax({
+            url:`${SERVER_CONNECTION}/characters/filter`,
+            method: 'POST',
+            headers : { 'Content-Type': 'application/json' },
+            body: filters
+        }).subscribe( 
+            res => console.log(res.response)
+        )
+    }
 }
 
 renderCharactersListSection(host: HTMLElement) {
@@ -63,7 +84,7 @@ renderCheckboxCategories(host: HTMLElement, categorieList: Array<any>){
             if(anchorCollapseButton.getAttribute("aria-expanded")=="true") {
                 anchorIcon.className="fas fa-angle-up";
                 anchorIcon.innerHTML="Show less";
-            }
+            } 
             else{
                 anchorIcon.className="fas fa-angle-down";
                 anchorIcon.innerHTML="Show more";
