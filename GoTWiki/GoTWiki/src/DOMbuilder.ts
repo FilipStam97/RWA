@@ -75,6 +75,11 @@ export const SEASONS_CONST = {
             value: 8,
             color: "#0e0e11"
         },
+        {
+            title:"All Seasons",
+            value: 0,
+            color: "#1266F1"
+        }
     ]
 }
 

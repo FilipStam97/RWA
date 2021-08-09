@@ -12,16 +12,16 @@ function createFilterObject(reqObject) {
                 break;
             }
             case "houseName": {
-                filterObject["houseName"] = { "$all" : element.values};
+                filterObject["houseName"] = { "$in" : element.values};
                 break;
             }
             case "killedBy": {
-                filterObject["killedBy"] = { "$all" : element.values};
+                filterObject["killedBy"] = { "$in" : element.values};
                 break;
             }
             case "serves": {
-                filterObject["serves"] = { "$all" : element.values};
-                break;
+                filterObject["serves"] = { "$in" : element.values};
+                break; 
             }
             default:
                 break;

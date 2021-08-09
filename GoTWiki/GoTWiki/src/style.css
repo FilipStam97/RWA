@@ -23,6 +23,7 @@ body{
 .mainAppContainerDiv{
     display: flex;
     flex-direction: row;
+
 }
 
 .sideNavDiv{
@@ -67,6 +68,43 @@ body{
 
 
 .dropDownButton {
+}
+
+.wrapperCharactersListSectionDiv {
+    color: white;
+    font-size: 40px;
+}
+
+.characterListDiv {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 1%;
+    
+}
+
+.card{
+    width: 250px;
+    height: 350px;
+    margin: 1%;
+    
+}
+
+.cardImg {
+    max-height: 200px; 
+    object-fit: fill;
+}
+
+.cardBody {
+ 
+}
+
+.characterViewImage{
+    width: 250px;
+    height: 350px;
+    object-fit: contain;
+
 }
 
 

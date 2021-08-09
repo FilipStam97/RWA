@@ -4,6 +4,7 @@ import { filter, map } from "rxjs/operators";
 import { createHtmlElement, FILTER_CONST, renderCheckBox } from "./DOMbuilder";
 import { FilterObject } from "./Models";
 import { SERVER_CONNECTION } from "./DOMbuilder";
+import { renderCharacterView } from "./CharacterView";
 
 const NUM_OF_VISABLE_OPTIONS = 4;
 
@@ -27,35 +28,26 @@ renderCharactersPage(host: HTMLElement){
     this.renderSideNav(sideNavDiv);
 
     let characterListDiv = createHtmlElement(host,"div", "characterListDiv");
-    this.renderCharactersListSection(characterListDiv);
+    let wrapperCharactersListSectionDiv = createHtmlElement(characterListDiv, "div", "wrapperCharactersListSectionDiv");
+    wrapperCharactersListSectionDiv.innerHTML="Select filters to search characters!";
    
 
 }
 
 renderSideNav(host: HTMLElement){
     this.renderCheckboxCategories(host, FILTER_CONST.elementArray);
-    let acceptButton = <HTMLButtonElement>createHtmlElement(host, "button", "acceptButton btn btn-outline-primary btn-rounded");
+    let acceptButton = <HTMLButtonElement>createHtmlElement(host, "button", "acceptButton btn btn-primary");
     acceptButton.type="button";
     acceptButton.setAttribute("data-mdb-ripple-color","dark");
     acceptButton.innerHTML = "ACCEPT FILTERS";
     acceptButton.onclick = () => {
-        const filters = {
-            "filterArray" : this.filterList
-        }
-        
-        ajax({
-            url:`${SERVER_CONNECTION}/characters/filter`,
-            method: 'POST',
-            headers : { 'Content-Type': 'application/json' },
-            body: filters
-        }).subscribe( 
-            res => console.log(res.response)
-        )
+        this.getFilteredCharacters();
     }
 }
 
 renderCharactersListSection(host: HTMLElement) {
-    host.innerHTML="ZLAAAAAAAAAAAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    let wrapperCharactersListSectionDiv = createHtmlElement(host, "div", "wrapperCharactersListSectionDiv");
+    wrapperCharactersListSectionDiv.innerHTML="Select filters to search characters!";
 
 }
 
@@ -150,10 +142,56 @@ updateFilterList(checkboxSelectObject :any){
 
         }
     }
-    //console.log(this.filterList);
     this.filterMonitor.subscribe(
         x => console.log(x)
     );
+}
+
+getFilteredCharacters() {
+    const filters = {
+        "filterArray" : this.filterList
+    }
+    
+    ajax({
+        url:`${SERVER_CONNECTION}/characters/filter`,
+        method: 'POST',
+        headers : { 'Content-Type': 'application/json' },
+        body: filters
+    }).subscribe( 
+        res => this.renderCharacterList(res.response)
+    )
+}
+
+renderCharacterList(characterList: any) {
+    let containerDiv = <HTMLElement>document.querySelector(".characterListDiv");
+    containerDiv.innerHTML="";
+    characterList.forEach((character: any) => {
+        console.log(character);
+        this.renderCharacterCard(containerDiv, character);
+    });
+
+
+}
+
+renderCharacterCard(host: HTMLElement, character: any) {
+    let cardDiv = createHtmlElement(host, "div", "card");
+    let img = <HTMLImageElement>createHtmlElement(cardDiv, "img", "cardImg card-img-top");
+    img.src=character.characterImageFull;
+    img.alt="Image not avaliable!";
+
+    let cardBody = createHtmlElement(cardDiv, "div", "cardBody card-body");
+    let characterName = createHtmlElement(cardBody, "h4", "characterName");
+    characterName.innerHTML= character.characterName;
+
+    let viewButton = <HTMLButtonElement>createHtmlElement(cardBody, "button", "viewButton btn btn-outline-primary");
+    viewButton.type="button";
+    viewButton.setAttribute("data-mdb-ripple-color","dark");
+    viewButton.innerHTML = "View character";
+    viewButton.onclick = () => {
+        host.innerHTML = "";
+        renderCharacterView(host, character);
+    }
+
 }
 
 }
