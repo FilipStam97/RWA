@@ -6,6 +6,8 @@ import { FilterObject } from "./Models";
 import { SERVER_CONNECTION } from "./DOMbuilder";
 import { renderCharacterView } from "./CharacterView";
 
+const DEFAULT_IMAGE_PATH = "https://static.wikia.nocookie.net/gameofthrones/images/c/c2/Iron_Throne.jpg";
+
 const NUM_OF_VISABLE_OPTIONS = 4;
 
 export class CharactersPage{
@@ -174,24 +176,69 @@ renderCharacterList(characterList: any) {
 }
 
 renderCharacterCard(host: HTMLElement, character: any) {
-    let cardDiv = createHtmlElement(host, "div", "card");
-    let img = <HTMLImageElement>createHtmlElement(cardDiv, "img", "cardImg card-img-top");
-    img.src=character.characterImageFull;
-    img.alt="Image not avaliable!";
 
-    let cardBody = createHtmlElement(cardDiv, "div", "cardBody card-body");
-    let characterName = createHtmlElement(cardBody, "h4", "characterName");
-    characterName.innerHTML= character.characterName;
+    let cardDiv = createHtmlElement(host, "div", "cardDiv card mb-3");
 
-    let viewButton = <HTMLButtonElement>createHtmlElement(cardBody, "button", "viewButton btn btn-outline-primary");
-    viewButton.type="button";
-    viewButton.setAttribute("data-mdb-ripple-color","dark");
-    viewButton.innerHTML = "View character";
-    viewButton.onclick = () => {
-        host.innerHTML = "";
-        renderCharacterView(host, character);
+    let cardDivRowWrapper = createHtmlElement(cardDiv, "div", "row g-0");
+
+    let cardDivImageDiv = createHtmlElement(cardDivRowWrapper, "div", "col-md-4");
+
+    let cardDivImage = <HTMLImageElement>createHtmlElement(cardDivImageDiv, "img", "cardDivImage img-fluid");
+    cardDivImage.src= character.characterImageFull == null ? DEFAULT_IMAGE_PATH : character.characterImageFull;
+
+    let cardDivColumnWrapper = createHtmlElement(cardDivRowWrapper, "div", "col-md-8");
+
+    let cardDivCardBody = createHtmlElement(cardDivColumnWrapper, "div", "cardBody");
+
+    let cardDivCharacterName = createHtmlElement(cardDivCardBody, "h4", "cardTitle")
+    cardDivCharacterName.innerHTML= character.characterName;
+    
+    if(character.actorName != null) {
+    let cardDivActorName = createHtmlElement(cardDivCardBody, "p", "cardTitle");
+    cardDivActorName.innerHTML= "Actor: ";
+    let cardDivActorLink = <HTMLAnchorElement>createHtmlElement(cardDivActorName, "a", "cardTitle");
+    cardDivActorLink.innerHTML =character.actorName;
+    cardDivActorLink.href = `https://www.imdb.com/${character.actorLink}`;
+    cardDivActorLink.target= "_blank";
+    }
+    
+    if(character.actors.length != 0) {
+        let cardDivActorName = createHtmlElement(cardDivCardBody, "p", "cardTitle")
+        cardDivActorName.innerHTML= "Actors: ";
+        character.actors.forEach((actor: { actorName: string, actorLink: string; }) => {
+            let cardDivActorLink = <HTMLAnchorElement>createHtmlElement(cardDivActorName, "a", "cardTitle");
+            cardDivActorLink.innerHTML =`${actor.actorName}, `;
+            cardDivActorLink.href = `https://www.imdb.com/${actor.actorLink}`;
+            cardDivActorLink.target= "_blank";
+        });
+    }
+
+    if(character.houseName.length != 0) {
+        let cardDivHouseName = createHtmlElement(cardDivCardBody, "p", "cardHouse")
+        cardDivHouseName.innerHTML= "House: ";
+        character.houseName.forEach((house: string) => {
+            cardDivHouseName.innerHTML += `${house}, `;
+        }); 
+    }
+
+    if(character.killed.length != 0) {
+        let cardDivKilled = createHtmlElement(cardDivCardBody, "p", "cardKilled")
+        cardDivKilled.innerHTML= "Killed: ";
+        character.killed.forEach((kill: string) => {
+            cardDivKilled.innerHTML += `${kill}, `;
+        }); 
+    }
+
+    if(character.killedBy.length != 0) {
+        let cardDivKilledBy = createHtmlElement(cardDivCardBody, "p", "cardKilledBy")
+        cardDivKilledBy.innerHTML= "Killed By: ";
+        character.killedBy.forEach((kill: string) => {
+            cardDivKilledBy.innerHTML += `${kill}, `;
+        }); 
     }
 
 }
+
+
 
 }

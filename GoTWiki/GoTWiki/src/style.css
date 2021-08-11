@@ -84,29 +84,23 @@ body{
     
 }
 
-.card{
-    width: 250px;
-    height: 350px;
+.cardDiv {
+    width: 1000px;
     margin: 1%;
     
+
 }
 
-.cardImg {
-    max-height: 200px; 
-    object-fit: fill;
+.cardDivImage {
+    object-fit: cover;
+    width: 400px !important;
+    height: 400px;
+   
 }
 
 .cardBody {
- 
+    margin: 2%;
 }
-
-.characterViewImage{
-    width: 250px;
-    height: 350px;
-    object-fit: contain;
-
-}
-
 
 
 
