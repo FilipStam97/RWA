@@ -12,7 +12,9 @@
 }
 
 .navbar {
+    position: fixed;
     width: 100%;
+    z-index: 100;
    
 }
 
@@ -29,6 +31,7 @@ body{
 .mainAppContainerDiv{
     display: flex;
     flex-direction: row;
+    padding-top: 65px;
 
 }
 
@@ -47,7 +50,7 @@ body{
 
 .characterListDiv{
     margin-left: 300px;
-    padding-top: 20px;
+    padding-top: 40px;
     padding-left: 1%;
 }
 
