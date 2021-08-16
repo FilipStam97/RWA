@@ -19,8 +19,24 @@ function createFilterObject(reqObject) {
                 filterObject["killedBy"] = { "$in" : element.values};
                 break;
             }
-            case "serves": {
-                filterObject["serves"] = { "$in" : element.values};
+            case "killed": {
+                filterObject["killed"] = { "$in" : element.values};
+                break; 
+            }
+            case "marriedEngaged": {
+                filterObject["marriedEngaged"] = { "$in" : element.values};
+                break; 
+            }
+            case "parentOf": {
+                filterObject["parentOf"] = { "$in" : element.values};
+                break; 
+            }
+            case "parents": {
+                filterObject["parents"] = { "$in" : element.values};
+                break; 
+            }
+            case "siblings": {
+                filterObject["siblings"] = { "$in" : element.values};
                 break; 
             }
             default:
@@ -33,13 +49,14 @@ function createFilterObject(reqObject) {
 }
 
 
-router.get('/', (req, res) => {
-    res.send("Characfters");
+router.get('/', async (req, res) => {
+    const values = await Character.distinct("siblings");
+    res.json(values);
 });
 
 router.get('/:characterID', async (req, res) => {
     try {
-        const character = await Character.findById(req.params.characterID)
+        const character = await Character.findById(req.params.characterID);
         res.json(character);
 
 

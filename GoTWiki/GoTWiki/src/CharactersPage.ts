@@ -2,9 +2,9 @@ import { identity, BehaviorSubject, fromEvent, combineLatest, observable, Observ
 import {ajax} from "rxjs/ajax";
 import { filter, map } from "rxjs/operators";
 import { createHtmlElement, FILTER_CONST, renderCheckBox } from "./DOMbuilder";
-import { FilterObject } from "./Models";
+import { FilterObject, Character } from "./Models";
 import { SERVER_CONNECTION } from "./DOMbuilder";
-import { renderCharacterView } from "./CharacterView";
+import { renderCharacterModalWrapper, renderCharacterView } from "./CharacterView";
 
 const DEFAULT_IMAGE_PATH = "https://static.wikia.nocookie.net/gameofthrones/images/c/c2/Iron_Throne.jpg";
 
@@ -30,6 +30,9 @@ renderCharactersPage(host: HTMLElement){
     this.renderSideNav(sideNavDiv);
 
     let characterListDiv = createHtmlElement(host,"div", "characterListDiv");
+
+    renderCharacterModalWrapper(host);
+
     let wrapperCharactersListSectionDiv = createHtmlElement(characterListDiv, "div", "wrapperCharactersListSectionDiv");
     wrapperCharactersListSectionDiv.innerHTML="Select filters to search characters!";
    
@@ -145,7 +148,7 @@ updateFilterList(checkboxSelectObject :any){
         }
     }
     this.filterMonitor.subscribe(
-        x => console.log(x)
+       // x => console.log(x)
     );
 }
 
@@ -159,8 +162,15 @@ getFilteredCharacters() {
         method: 'POST',
         headers : { 'Content-Type': 'application/json' },
         body: filters
-    }).subscribe( 
-        res => this.renderCharacterList(res.response)
+    })
+    .pipe(
+        map(res => res.response)
+    )
+    .subscribe( 
+        res => {
+            console.log(res);
+           this.renderCharacterList(res);
+        }
     )
 }
 
@@ -168,7 +178,7 @@ renderCharacterList(characterList: any) {
     let containerDiv = <HTMLElement>document.querySelector(".characterListDiv");
     containerDiv.innerHTML="";
     characterList.forEach((character: any) => {
-        console.log(character);
+        //console.log(character);
         this.renderCharacterCard(containerDiv, character);
     });
 
@@ -179,12 +189,13 @@ renderCharacterCard(host: HTMLElement, character: any) {
 
     let cardDiv = createHtmlElement(host, "div", "cardDiv card mb-3");
     cardDiv.setAttribute("data-mdb-toggle","modal");
-    cardDiv.setAttribute("data-mdb-target",`#cahracterView${character._id}`);
-    renderCharacterView(host, character);
-   
-   
-    
+    cardDiv.setAttribute("data-mdb-target","#cahracterView");
+    cardDiv.onclick = () =>{
+        let characterModalDialog = <HTMLElement>document.querySelector(".modal-dialog");
+        renderCharacterView(characterModalDialog, character);
 
+    }
+   
     let cardDivImage = <HTMLImageElement>createHtmlElement(cardDiv, "img", "cardDivImage img-fluid");
     cardDivImage.src= character.characterImageFull == null ? DEFAULT_IMAGE_PATH : character.characterImageFull;
 
@@ -194,8 +205,6 @@ renderCharacterCard(host: HTMLElement, character: any) {
 
     let cardDivCharacterName = createHtmlElement(cardDivCardBody, "h5", "cardTitle")
     cardDivCharacterName.innerHTML= character.characterName;
-
-  
 
 }
 

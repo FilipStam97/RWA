@@ -6,15 +6,10 @@ const DEFAULT_IMAGE_PATH = "https://static.wikia.nocookie.net/gameofthrones/imag
 
 export function renderCharacterView(host: HTMLElement, character: any) {
     
-    let characterModalViewDiv =createHtmlElement(host, "div", "modal fade");
-    characterModalViewDiv.id = `cahracterView${character._id}`;
-    characterModalViewDiv.tabIndex = -1;
-    characterModalViewDiv.setAttribute("aria-labelledby","cahracterViewModal");
-    characterModalViewDiv.setAttribute("aria-hidden","true");
+    
+    host.innerHTML= "";
 
-    let characterModalDialog = createHtmlElement(characterModalViewDiv, "div", "modal-dialog");
-
-    let characterModalContetnt = createHtmlElement(characterModalDialog, "div", "modal-content");
+    let characterModalContetnt = createHtmlElement(host, "div", "modal-content");
     
     //Header
     let characterModalHeader = createHtmlElement(characterModalContetnt, "div", "characterModalHeader modal-header");
@@ -81,5 +76,15 @@ export function renderCharacterViewAttribute(host: HTMLElement, attributeTitle: 
       characterViewAttribute.innerHTML += `${attribute}, `;
     }); 
   }
+
+}
+
+export function renderCharacterModalWrapper(host: HTMLElement) {
+  let characterModalViewDiv =createHtmlElement(host, "div", "modal fade");
+  characterModalViewDiv.id = "cahracterView";
+  characterModalViewDiv.tabIndex = -1;
+  characterModalViewDiv.setAttribute("aria-labelledby","cahracterViewModal");
+  characterModalViewDiv.setAttribute("aria-hidden","true");
+  let characterModalDialog = createHtmlElement(characterModalViewDiv, "div", "modal-dialog");
 
 }

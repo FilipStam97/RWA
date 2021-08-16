@@ -1,4 +1,4 @@
-import { Movie, Character} from "./Models";
+
 import { createHtmlElement } from "./DOMbuilder";
 import { CharactersPage } from "./CharactersPage";
 import { catchError, debounceTime, filter, map, retry, switchMap, take, takeUntil } from "rxjs/operators"
