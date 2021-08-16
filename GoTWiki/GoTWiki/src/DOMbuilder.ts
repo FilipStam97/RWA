@@ -33,56 +33,6 @@ export const SERVER_CONNECTION = "http://localhost:3000";
 
 
 
-export const SEASONS_CONST = {
-    elementArray: [
-        {
-            title:"Season 1",
-            value: 1,
-            color: "#586551"
-        },
-        {
-            title:"Season 2",
-            value: 2,
-            color: "#8d6940"
-        },
-        {
-            title:"Season 3",
-            value: 3,
-            color: "#854141"
-        },
-        {
-            title:"Season 4",
-            value: 4,
-            color: "#42798e"
-        },
-        {
-            title:"Season 5",
-            value: 5,
-            color: "#725a7e"
-        },
-        {
-            title:"Season 6",
-            value: 6,
-            color: "#4e6f72"
-        },    
-        {
-            title:"Season 7",
-            value: 7,
-            color: "#4c4f62"
-        },    
-        {
-            title:"Season 8",
-            value: 8,
-            color: "#0e0e11"
-        },
-        {
-            title:"All Seasons",
-            value: 0,
-            color: "#1266F1"
-        }
-    ]
-}
-
 
 
 export const FILTER_CONST = {

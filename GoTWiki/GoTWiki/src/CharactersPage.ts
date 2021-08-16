@@ -178,64 +178,24 @@ renderCharacterList(characterList: any) {
 renderCharacterCard(host: HTMLElement, character: any) {
 
     let cardDiv = createHtmlElement(host, "div", "cardDiv card mb-3");
+    cardDiv.setAttribute("data-mdb-toggle","modal");
+    cardDiv.setAttribute("data-mdb-target",`#cahracterView${character._id}`);
+    renderCharacterView(host, character);
+   
+   
+    
 
-    let cardDivRowWrapper = createHtmlElement(cardDiv, "div", "row g-0");
-
-    let cardDivImageDiv = createHtmlElement(cardDivRowWrapper, "div", "col-md-4");
-
-    let cardDivImage = <HTMLImageElement>createHtmlElement(cardDivImageDiv, "img", "cardDivImage img-fluid");
+    let cardDivImage = <HTMLImageElement>createHtmlElement(cardDiv, "img", "cardDivImage img-fluid");
     cardDivImage.src= character.characterImageFull == null ? DEFAULT_IMAGE_PATH : character.characterImageFull;
 
-    let cardDivColumnWrapper = createHtmlElement(cardDivRowWrapper, "div", "col-md-8");
+    let cardDivColumnWrapper = createHtmlElement(cardDiv, "div", "col-md-8");
 
     let cardDivCardBody = createHtmlElement(cardDivColumnWrapper, "div", "cardBody");
 
-    let cardDivCharacterName = createHtmlElement(cardDivCardBody, "h4", "cardTitle")
+    let cardDivCharacterName = createHtmlElement(cardDivCardBody, "h5", "cardTitle")
     cardDivCharacterName.innerHTML= character.characterName;
-    
-    if(character.actorName != null) {
-    let cardDivActorName = createHtmlElement(cardDivCardBody, "p", "cardTitle");
-    cardDivActorName.innerHTML= "Actor: ";
-    let cardDivActorLink = <HTMLAnchorElement>createHtmlElement(cardDivActorName, "a", "cardTitle");
-    cardDivActorLink.innerHTML =character.actorName;
-    cardDivActorLink.href = `https://www.imdb.com/${character.actorLink}`;
-    cardDivActorLink.target= "_blank";
-    }
-    
-    if(character.actors.length != 0) {
-        let cardDivActorName = createHtmlElement(cardDivCardBody, "p", "cardTitle")
-        cardDivActorName.innerHTML= "Actors: ";
-        character.actors.forEach((actor: { actorName: string, actorLink: string; }) => {
-            let cardDivActorLink = <HTMLAnchorElement>createHtmlElement(cardDivActorName, "a", "cardTitle");
-            cardDivActorLink.innerHTML =`${actor.actorName}, `;
-            cardDivActorLink.href = `https://www.imdb.com/${actor.actorLink}`;
-            cardDivActorLink.target= "_blank";
-        });
-    }
 
-    if(character.houseName.length != 0) {
-        let cardDivHouseName = createHtmlElement(cardDivCardBody, "p", "cardHouse")
-        cardDivHouseName.innerHTML= "House: ";
-        character.houseName.forEach((house: string) => {
-            cardDivHouseName.innerHTML += `${house}, `;
-        }); 
-    }
-
-    if(character.killed.length != 0) {
-        let cardDivKilled = createHtmlElement(cardDivCardBody, "p", "cardKilled")
-        cardDivKilled.innerHTML= "Killed: ";
-        character.killed.forEach((kill: string) => {
-            cardDivKilled.innerHTML += `${kill}, `;
-        }); 
-    }
-
-    if(character.killedBy.length != 0) {
-        let cardDivKilledBy = createHtmlElement(cardDivCardBody, "p", "cardKilledBy")
-        cardDivKilledBy.innerHTML= "Killed By: ";
-        character.killedBy.forEach((kill: string) => {
-            cardDivKilledBy.innerHTML += `${kill}, `;
-        }); 
-    }
+  
 
 }
 

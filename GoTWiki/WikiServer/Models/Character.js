@@ -26,7 +26,6 @@ const CharacterSchema = mongoose.Schema({
     kingsguard: Boolean,
     nickname: String,
     serves: [String],
-    sibling: [String],
     siblings: [String],
     actors: [{
         actorName: String,
