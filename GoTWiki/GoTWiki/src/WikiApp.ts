@@ -1,8 +1,9 @@
 
-import { createHtmlElement } from "./DOMbuilder";
+import { createHtmlElement, SERVER_CONNECTION } from "./DOMbuilder";
 import { CharactersPage } from "./CharactersPage";
-import { catchError, debounceTime, filter, map, retry, switchMap, take, takeUntil } from "rxjs/operators"
+import { catchError, debounceTime, filter, map, retry, switchMap, take, takeUntil, zip, zipAll } from "rxjs/operators"
 import { from, interval, of, range, Observable, Subject, fromEvent } from "rxjs";
+import { ajax } from "rxjs/ajax";
 const FETCH_URI = "http://localhost:3000/films";
 
 export class WikiApp {
@@ -57,14 +58,36 @@ export class WikiApp {
     
         //Right elements
         let rightElementContainerDiv = createHtmlElement(containerWrapper,"div","d-flex align-items-center");
-        let searchBar = <HTMLInputElement>createHtmlElement(rightElementContainerDiv, "input", "form-control rounded");
+        let searchBar = <HTMLInputElement>createHtmlElement(rightElementContainerDiv, "input", "searchBar form-control rounded");
         searchBar.type="search";
         searchBar.placeholder="Search";
+        this.handleSearch();
     
         let iconSpan = createHtmlElement(rightElementContainerDiv,"span","input-group-text border-0");
         let searchIcon = createHtmlElement(iconSpan,"i","fas fa-search");
     
     }
+
+    handleSearch() {
+        let characterListDiv = <HTMLElement>document.querySelector(".characterListDiv");
+        let searchBar = <HTMLElement>document.querySelector(".searchBar");
+
+        fromEvent(searchBar, "input")
+        .pipe(
+            debounceTime(700),
+            map((ev: InputEvent) => (<HTMLInputElement>ev.target).value),
+            filter(x => x.length >= 3),
+            zipAll( value => {
+                ajax.get(`${SERVER_CONNECTION}/characters/characterName/${value}`),
+                ajax.get(`${SERVER_CONNECTION}/characters/actorName/${value}`)
+            })
+           // switchMap(value => this.handleSearchRequest(value))
+
+        )
+        .subscribe( res => console.log(res));
+    }
+
+
 
 
 

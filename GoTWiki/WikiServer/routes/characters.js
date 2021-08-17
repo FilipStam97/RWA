@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Character = require('../Models/Character');
 
-
 function createFilterObject(reqObject) {
     let filterObject = {};
     reqObject.filterArray.forEach(element => {
@@ -15,7 +14,7 @@ function createFilterObject(reqObject) {
                 filterObject["houseName"] = { "$in" : element.values};
                 break;
             }
-            case "killedBy": {
+            case "killedBy": { 
                 filterObject["killedBy"] = { "$in" : element.values};
                 break;
             }
@@ -24,7 +23,7 @@ function createFilterObject(reqObject) {
                 break; 
             }
             case "marriedEngaged": {
-                filterObject["marriedEngaged"] = { "$in" : element.values};
+                filterObject["marriedEngaged"] = { "$in" : element.values}; 
                 break; 
             }
             case "parentOf": {
@@ -49,10 +48,25 @@ function createFilterObject(reqObject) {
 }
 
 
+
+
+
 router.get('/', async (req, res) => {
-    const values = await Character.distinct("siblings");
-    res.json(values);
+    res.json("yooo");
 });
+
+router.get('/characterName/:value', async (req, res) => {
+    const characters = await Character.find({characterName: new RegExp(req.params.value)});
+    console.log(req.params.value);
+    res.json(characters);
+});
+
+router.get('/actorName/:value', async (req, res) => {
+    const characters = await Character.find({actorName: new RegExp(req.params.value)});
+    console.log(req.params.value);
+    res.json(characters);
+});
+
 
 router.get('/:characterID', async (req, res) => {
     try {
@@ -63,6 +77,11 @@ router.get('/:characterID', async (req, res) => {
     } catch (err) {
         res.json({message: err});
     }
+});
+
+router.get('/filter', async (req, res) => {
+    const values = await Character.distinct("siblings");
+    res.json(values);
 });
 
 router.post('/filter', (req, res, next) => { req.body = createFilterObject(req.body); next(); }, async (req, res) => {
