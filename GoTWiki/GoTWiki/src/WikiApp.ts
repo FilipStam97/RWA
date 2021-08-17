@@ -1,7 +1,8 @@
 
 import { createHtmlElement, SERVER_CONNECTION } from "./DOMbuilder";
 import { CharactersPage } from "./CharactersPage";
-import { catchError, debounceTime, filter, map, retry, switchMap, take, takeUntil, zip, zipAll } from "rxjs/operators"
+import { catchError, debounceTime, filter, map, mergeMap, retry, switchMap, take, takeUntil } from "rxjs/operators";
+import { combineLatest, forkJoin } from 'rxjs';
 import { from, interval, of, range, Observable, Subject, fromEvent } from "rxjs";
 import { ajax } from "rxjs/ajax";
 const FETCH_URI = "http://localhost:3000/films";
@@ -77,16 +78,36 @@ export class WikiApp {
             debounceTime(700),
             map((ev: InputEvent) => (<HTMLInputElement>ev.target).value),
             filter(x => x.length >= 3),
-            zipAll( value => {
-                ajax.get(`${SERVER_CONNECTION}/characters/characterName/${value}`),
-                ajax.get(`${SERVER_CONNECTION}/characters/actorName/${value}`)
-            })
-           // switchMap(value => this.handleSearchRequest(value))
+            switchMap( value => 
+                this.getSearchResults(value)
 
+            )
         )
-        .subscribe( res => console.log(res));
+        .subscribe( res =>{ 
+            console.log(res)
+    
+
+        });
     }
 
+
+
+
+    getSearchResults(value: string): Observable<any> {
+        return combineLatest ({
+          characters:  ajax({
+            url:`${SERVER_CONNECTION}/characters/characterName/${value}`,
+            method: 'GET',
+            headers : { 'Content-Type': 'application/json' },
+        }),
+        actors:  ajax({
+            url:`${SERVER_CONNECTION}/characters/actorName/${value}`,
+            method: 'GET',
+            headers : { 'Content-Type': 'application/json' },
+        })
+
+    })
+    }
 
 
 
