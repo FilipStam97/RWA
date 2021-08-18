@@ -1,11 +1,11 @@
 
 import { createHtmlElement, SERVER_CONNECTION } from "./DOMbuilder";
 import { CharactersPage } from "./CharactersPage";
-import { catchError, debounceTime, filter, map, mergeMap, retry, switchMap, take, takeUntil } from "rxjs/operators";
-import { combineLatest, forkJoin } from 'rxjs';
+import { catchError, combineAll, concatAll, debounceTime, filter, map, mergeMap, retry, scan, switchMap, take, takeUntil,toArray,zip, zipAll } from "rxjs/operators";
+import { combineLatest, concat, forkJoin, merge } from 'rxjs';
 import { from, interval, of, range, Observable, Subject, fromEvent } from "rxjs";
 import { ajax } from "rxjs/ajax";
-const FETCH_URI = "http://localhost:3000/films";
+
 
 export class WikiApp {
     charactersPage: CharactersPage;
@@ -20,25 +20,6 @@ export class WikiApp {
         this.charactersPage=new CharactersPage();
         this.charactersPage.renderCharactersPage(mainAppContainerDiv);
     }
-
-
-
-
-
-    // handleMovieInput() {
-    //     // pogledaj interesantne operatore scan, pairwise, distinct
-    //     let noteAppNoteListDiv = <HTMLElement>document.querySelector(".noteAppNoteListDiv");
-    //     let input = <HTMLElement>document.querySelector(".inputMain");
-    //     fromEvent(input, "input").pipe(
-    //         debounceTime(700),
-    //         map((ev: InputEvent) => (<HTMLInputElement>ev.target).value),
-    //         filter(x => x.length >= 5),
-    //         switchMap(name => this.getMovieByName(name)),
-    //     ).subscribe(movieList => {
-    //         noteAppNoteListDiv.innerHTML = "";
-    //        // this.renderMovieList(noteAppNoteListDiv, movieList);
-    //     })
-    // }
 
     renderHeader(host: HTMLElement){
         //Navbar
@@ -80,13 +61,10 @@ export class WikiApp {
             filter(x => x.length >= 3),
             switchMap( value => 
                 this.getSearchResults(value)
-
             )
         )
         .subscribe( res =>{ 
-            console.log(res)
-    
-
+            this.charactersPage.renderCharacterList(res);
         });
     }
 
@@ -94,19 +72,25 @@ export class WikiApp {
 
 
     getSearchResults(value: string): Observable<any> {
-        return combineLatest ({
-          characters:  ajax({
+        return concat(
+          ajax({
             url:`${SERVER_CONNECTION}/characters/characterName/${value}`,
             method: 'GET',
             headers : { 'Content-Type': 'application/json' },
-        }),
-        actors:  ajax({
+        }).pipe(
+            map(res => res.response)
+        ),
+        ajax({
             url:`${SERVER_CONNECTION}/characters/actorName/${value}`,
             method: 'GET',
             headers : { 'Content-Type': 'application/json' },
-        })
-
-    })
+        }).pipe(
+            map(res => res.response)
+        )
+    ).pipe(
+        concatAll(),
+        toArray()
+    )
     }
 
 
