@@ -1,11 +1,12 @@
-import { createHtmlElement } from "./DOMbuilder";
+import { ajax } from "rxjs/ajax";
+import { concatAll, map } from "rxjs/operators";
+import { createHtmlElement, SERVER_CONNECTION } from "./DOMbuilder";
 const DEFAULT_IMAGE_PATH = "https://static.wikia.nocookie.net/gameofthrones/images/c/c2/Iron_Throne.jpg";
 
 
 
 
-export function renderCharacterView(host: HTMLElement, character: any) {
-    
+export function renderCharacterView(host: HTMLElement, character: any) {     
     
     host.innerHTML= "";
 
@@ -73,7 +74,16 @@ export function renderCharacterViewAttribute(host: HTMLElement, attributeTitle: 
     let characterViewAttribute = createHtmlElement(host, "p", "characterViewAttribute")
     characterViewAttribute.innerHTML= attributeTitle;
     attributeArray.forEach((attribute: string) => {
-      characterViewAttribute.innerHTML += `${attribute}, `;
+      if(attributeTitle == "House: "){
+        characterViewAttribute.innerHTML += `${attribute}, `;
+      }
+      else {
+        let characterViewAttributeAnchor = createHtmlElement(characterViewAttribute,"a", "characterViewAttributeAnchor");
+        characterViewAttributeAnchor.innerHTML = `${attribute}, `;
+        characterViewAttributeAnchor.onclick = () => {
+          getCharacterByName(attribute);
+        }
+      }
     }); 
   }
 
@@ -87,4 +97,24 @@ export function renderCharacterModalWrapper(host: HTMLElement) {
   characterModalViewDiv.setAttribute("aria-hidden","true");
   let characterModalDialog = createHtmlElement(characterModalViewDiv, "div", "modal-dialog");
 
+}
+
+export function getCharacterByName(characterName : string) {
+  ajax({
+    url:`${SERVER_CONNECTION}/characters/name/${characterName}`,
+    method: 'GET',
+    headers : { 'Content-Type': 'application/json' },
+})
+.pipe(
+    map(res => res.response),
+    concatAll()
+)
+.subscribe( 
+    res => {
+        console.log(res);
+       let characterModalDialog = <HTMLElement>document.querySelector(".modal-dialog");
+       this.renderCharacterView(characterModalDialog, res);
+
+    }
+) 
 }

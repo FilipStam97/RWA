@@ -144,6 +144,16 @@ body{
     font-size: 20px;
 }
 
+.characterViewAttributeAnchor{
+    color: #E97451	;
+
+}
+
+.characterViewAttributeAnchor:hover {
+    cursor: pointer;
+    color: #800020	;
+}
+
 
 
 

@@ -10,7 +10,9 @@ const DEFAULT_IMAGE_PATH = "https://static.wikia.nocookie.net/gameofthrones/imag
 
 const NUM_OF_VISABLE_OPTIONS = 4;
 
-export class CharactersPage{
+const ELEMEMENT_BY_NAME_NOT_FOUND = -1;
+
+export class CharactersPage {
     filterList: Array<FilterObject>;
     filterMonitor: BehaviorSubject<Array<FilterObject>>
 
@@ -124,7 +126,7 @@ renderCheckboxCategories(host: HTMLElement, categorieList: Array<any>){
 }
 
 updateFilterList(checkboxSelectObject :any){
-    if(this.returnIndexOfElementByName(checkboxSelectObject.filterName) == -1){
+    if(this.returnIndexOfElementByName(checkboxSelectObject.filterName) == ELEMEMENT_BY_NAME_NOT_FOUND){
         this.filterList.push({
             name: checkboxSelectObject.filterName,
             values: [checkboxSelectObject.inputValue]

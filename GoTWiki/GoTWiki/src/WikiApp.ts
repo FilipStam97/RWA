@@ -5,7 +5,8 @@ import { catchError, combineAll, concatAll, debounceTime, filter, map, mergeMap,
 import { combineLatest, concat, forkJoin, merge } from 'rxjs';
 import { from, interval, of, range, Observable, Subject, fromEvent } from "rxjs";
 import { ajax } from "rxjs/ajax";
-
+const DEBOUNCE_TIME_VALUE = 700;
+const SEARCH_INPUT_MIN_LENGTH = 3;
 
 export class WikiApp {
     charactersPage: CharactersPage;
@@ -56,9 +57,9 @@ export class WikiApp {
 
         fromEvent(searchBar, "input")
         .pipe(
-            debounceTime(700),
+            debounceTime(DEBOUNCE_TIME_VALUE),
             map((ev: InputEvent) => (<HTMLInputElement>ev.target).value),
-            filter(x => x.length >= 3),
+            filter(x => x.length >= SEARCH_INPUT_MIN_LENGTH),
             switchMap( value => 
                 this.getSearchResults(value)
             )

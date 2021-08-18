@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Character = require('../Models/Character');
+const Filter = require('../Models/Filter');
+
 
 function createFilterObject(reqObject) {
     let filterObject = {};
@@ -55,6 +57,14 @@ router.get('/', async (req, res) => {
     res.json("yooo");
 });
 
+router.get('/filters', async (req, res) => {
+    let filters = await Filter.find();
+    filters.forEach(async filter =>  {
+        filter["values"] = await Character.distinct(filter.name);
+    })
+    res.json(filters);
+});
+
 router.get('/characterName/:value', async (req, res) => {
     const characters = await Character.find({characterName: new RegExp(req.params.value)});
     console.log(req.params.value);
@@ -66,6 +76,11 @@ router.get('/actorName/:value', async (req, res) => {
     console.log(req.params.value);
 
     res.json(characters);
+});
+
+router.get('/name/:value', async (req, res) => {
+    const character = await Character.find({characterName: req.params.value});
+    res.json(character);
 });
 
 
