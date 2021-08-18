@@ -1,7 +1,7 @@
 
 import { createHtmlElement, SERVER_CONNECTION } from "./DOMbuilder";
 import { CharactersPage } from "./CharactersPage";
-import { catchError, debounceTime, filter, map, retry, switchMap, take, takeUntil, zip, zipAll } from "rxjs/operators"
+import { catchError, debounceTime, filter, map, retry, switchMap, take, takeUntil, zipAll } from "rxjs/operators"
 import { from, interval, of, range, Observable, Subject, fromEvent } from "rxjs";
 import { ajax } from "rxjs/ajax";
 const FETCH_URI = "http://localhost:3000/films";
@@ -77,16 +77,25 @@ export class WikiApp {
             debounceTime(700),
             map((ev: InputEvent) => (<HTMLInputElement>ev.target).value),
             filter(x => x.length >= 3),
-            zipAll( value => {
-                ajax.get(`${SERVER_CONNECTION}/characters/characterName/${value}`),
-                ajax.get(`${SERVER_CONNECTION}/characters/actorName/${value}`)
-            })
+            switchMap( value => this.getSearchResults(value, "characterName"))
            // switchMap(value => this.handleSearchRequest(value))
 
         )
         .subscribe( res => console.log(res));
     }
 
+
+    getSearchResults(value: string, searchByVariable: string) {
+        return from(fetch(`${SERVER_CONNECTION}/${searchByVariable}/${value}`)
+            .then((res) => {
+                if (res.ok)
+                    return res.json();
+                else throw new Error(`Nothing was found`);
+            })
+            .catch((err) => console.log("Error" + err))
+
+        )
+    }
 
 
 
