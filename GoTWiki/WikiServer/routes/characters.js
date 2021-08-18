@@ -64,6 +64,7 @@ router.get('/characterName/:value', async (req, res) => {
 router.get('/actorName/:value', async (req, res) => {
     const characters = await Character.find({actorName: new RegExp(req.params.value)});
     console.log(req.params.value);
+
     res.json(characters);
 });
 
