@@ -75,7 +75,8 @@ export function renderCharacterViewAttribute(host: HTMLElement, attributeTitle: 
     characterViewAttribute.innerHTML= attributeTitle;
     attributeArray.forEach((attribute: string) => {
       if(attributeTitle == "House: "){
-        characterViewAttribute.innerHTML += `${attribute}, `;
+        let characterViewAttributeColored = createHtmlElement(characterViewAttribute,"span", "characterViewAttributeColored");
+        characterViewAttributeColored.innerHTML += `${attribute}, `;
       }
       else {
         let characterViewAttributeAnchor = createHtmlElement(characterViewAttribute,"a", "characterViewAttributeAnchor");
@@ -113,8 +114,9 @@ export function getCharacterByName(characterName : string) {
     res => {
         console.log(res);
        let characterModalDialog = <HTMLElement>document.querySelector(".modal-dialog");
-       this.renderCharacterView(characterModalDialog, res);
+       renderCharacterView(characterModalDialog, res)
 
     }
 ) 
 }
+

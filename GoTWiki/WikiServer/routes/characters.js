@@ -95,10 +95,6 @@ router.get('/:characterID', async (req, res) => {
     }
 });
 
-router.get('/filter', async (req, res) => {
-    const values = await Character.distinct("siblings");
-    res.json(values);
-});
 
 router.post('/filter', (req, res, next) => { req.body = createFilterObject(req.body); next(); }, async (req, res) => {
     try {
