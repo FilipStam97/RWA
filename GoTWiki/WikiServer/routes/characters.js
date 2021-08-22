@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Character = require('../Models/Character');
-const Filter = require('../Models/Filter');
+
 
 
 function createFilterObject(reqObject) {
@@ -57,13 +57,6 @@ router.get('/', async (req, res) => {
     res.json("yooo");
 });
 
-router.get('/filters', async (req, res) => {
-    let filters = await Filter.find();
-    filters.forEach(async filter =>  {
-        filter["values"] = await Character.distinct(filter.name);
-    })
-    res.json(filters);
-});
 
 router.get('/characterName/:value', async (req, res) => {
     const characters = await Character.find({characterName: new RegExp(req.params.value)});

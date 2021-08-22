@@ -1,7 +1,7 @@
 import { identity, BehaviorSubject, fromEvent, combineLatest, observable, Observable} from "rxjs";
 import {ajax} from "rxjs/ajax";
 import { filter, map } from "rxjs/operators";
-import { createHtmlElement, FILTER_CONST, renderCheckBox } from "./DOMbuilder";
+import { createHtmlElement, renderCheckBox } from "./DOMbuilder";
 import { FilterObject, Character } from "./Models";
 import { SERVER_CONNECTION } from "./DOMbuilder";
 import { renderCharacterModalWrapper, renderCharacterView } from "./CharacterView";
@@ -14,11 +14,11 @@ const ELEMEMENT_BY_NAME_NOT_FOUND = -1;
 
 export class CharactersPage {
     filterList: Array<FilterObject>;
-    filterMonitor: BehaviorSubject<Array<FilterObject>>
+
 
     constructor() {
         this.filterList = new Array();
-        this.filterMonitor= new BehaviorSubject(this.filterList);
+
     }
 
 returnIndexOfElementByName(name :string){
@@ -42,14 +42,26 @@ renderCharactersPage(host: HTMLElement){
 }
 
 renderSideNav(host: HTMLElement){
-    this.renderCheckboxCategories(host, FILTER_CONST.elementArray);
-    let acceptButton = <HTMLButtonElement>createHtmlElement(host, "button", "acceptButton btn btn-primary");
-    acceptButton.type="button";
-    acceptButton.setAttribute("data-mdb-ripple-color","dark");
-    acceptButton.innerHTML = "ACCEPT FILTERS";
-    acceptButton.onclick = () => {
-        this.getFilteredCharacters();
-    }
+    ajax({
+        url:`${SERVER_CONNECTION}/filters`,
+        method: 'GET',
+        headers : { 'Content-Type': 'application/json' },
+    }).pipe(
+        map(res => res.response)
+    )
+    .subscribe(
+        res => {
+            this.renderCheckboxCategories(host, <Array<any>>res);
+            let acceptButton = <HTMLButtonElement>createHtmlElement(host, "button", "acceptButton btn btn-primary");
+            acceptButton.type="button";
+            acceptButton.setAttribute("data-mdb-ripple-color","dark");
+            acceptButton.innerHTML = "ACCEPT FILTERS";
+            acceptButton.onclick = () => {
+                this.getFilteredCharacters();
+            }
+        }
+    )
+ 
 }
 
 renderCharactersListSection(host: HTMLElement) {
@@ -99,13 +111,6 @@ renderCheckboxCategories(host: HTMLElement, categorieList: Array<any>){
             }
            
         });
-
-        // let filterSubject = new BehaviorSubject(cetegorieDiv).pipe(
-        //     map(() => (<HTMLInputElement>ev.target).value),
-        //     );
-        //     filterSubject.subscribe((el) => {
-        //         console.log(el);
-        //     })
         
     fromEvent(cetegorieDiv, "input").pipe(
         map((ev: InputEvent) => ({
@@ -115,7 +120,6 @@ renderCheckboxCategories(host: HTMLElement, categorieList: Array<any>){
         }),
         )).subscribe((el) => {
             this.updateFilterList(el);
-           // console.log(el);
         });
 
 
@@ -149,9 +153,6 @@ updateFilterList(checkboxSelectObject :any){
 
         }
     }
-    this.filterMonitor.subscribe(
-       // x => console.log(x)
-    );
 }
 
 getFilteredCharacters() {
@@ -209,7 +210,6 @@ renderCharacterCard(host: HTMLElement, character: any) {
     cardDivCharacterName.innerHTML= character.characterName;
 
 }
-
 
 
 }

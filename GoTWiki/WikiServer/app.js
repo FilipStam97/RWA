@@ -14,6 +14,9 @@ app.use(bodyParser.json());
 const charactersRoute = require('./routes/characters');
 app.use('/characters', charactersRoute);
 
+const filtersRoute = require('./routes/filters');
+app.use('/filters', filtersRoute);
+
 
 //Routes
 app.get('/', (req, res) => {
