@@ -1,0 +1,28 @@
+h3 {
+    background-color: gold;
+    margin-top: 0%;
+    padding: 2%;
+}
+img {
+    width: 50%;
+}
+div.Desc {
+    width: 40%;
+    float: right;
+}
+
+:host {
+    width: 400px;
+    display: block;
+    border: 1px solid black;
+    box-sizing: 10px 5px 5px gray;
+}
+
+div.Score {
+    font-size: 30px;
+    padding: 5%;
+}
+
+div.Score :hover {
+   cursor: pointer;
+}
