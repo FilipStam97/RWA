@@ -3,10 +3,9 @@ import {ajax} from "rxjs/ajax";
 import { filter, map } from "rxjs/operators";
 import { createHtmlElement, renderCheckBox } from "./DOMbuilder";
 import { FilterObject, Character } from "./Models";
-import { SERVER_CONNECTION } from "./DOMbuilder";
 import { renderCharacterModalWrapper, renderCharacterView } from "./CharacterView";
+import { DEFAULT_IMAGE_PATH , SERVER_CONNECTION} from "./Config";
 
-const DEFAULT_IMAGE_PATH = "https://static.wikia.nocookie.net/gameofthrones/images/c/c2/Iron_Throne.jpg";
 
 const NUM_OF_VISABLE_OPTIONS = 4;
 
@@ -198,7 +197,6 @@ renderCharacterCard(host: HTMLElement, character: any) {
         renderCharacterView(characterModalDialog, character);
 
     }
-   
     let cardDivImage = <HTMLImageElement>createHtmlElement(cardDiv, "img", "cardDivImage img-fluid");
     cardDivImage.src= character.characterImageFull == null ? DEFAULT_IMAGE_PATH : character.characterImageFull;
 

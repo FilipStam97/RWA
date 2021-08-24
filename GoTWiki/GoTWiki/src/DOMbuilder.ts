@@ -19,7 +19,7 @@ export function renderCheckBox(host: HTMLElement, checkBoxItem : string, checkBo
 
 }
 
-export const SERVER_CONNECTION = "http://localhost:3000";
+
 
 
 

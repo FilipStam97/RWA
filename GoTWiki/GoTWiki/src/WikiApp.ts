@@ -1,5 +1,6 @@
 
-import { createHtmlElement, SERVER_CONNECTION } from "./DOMbuilder";
+import { createHtmlElement } from "./DOMbuilder";
+import { SERVER_CONNECTION } from "./Config";
 import { CharactersPage } from "./CharactersPage";
 import { catchError, combineAll, concatAll, debounceTime, filter, map, mergeMap, retry, scan, switchMap, take, takeUntil,toArray,zip, zipAll } from "rxjs/operators";
 import { combineLatest, concat, forkJoin, merge } from 'rxjs';

@@ -1,7 +1,7 @@
 import { ajax } from "rxjs/ajax";
 import { concatAll, map } from "rxjs/operators";
-import { createHtmlElement, SERVER_CONNECTION } from "./DOMbuilder";
-const DEFAULT_IMAGE_PATH = "https://static.wikia.nocookie.net/gameofthrones/images/c/c2/Iron_Throne.jpg";
+import { createHtmlElement } from "./DOMbuilder";
+import { DEFAULT_IMAGE_PATH, SERVER_CONNECTION } from "./Config";
 
 
 
@@ -16,7 +16,7 @@ export function renderCharacterView(host: HTMLElement, character: any) {
     let characterModalHeader = createHtmlElement(characterModalContetnt, "div", "characterModalHeader modal-header");
 
     let characterModalImage = <HTMLImageElement>createHtmlElement(characterModalHeader, "img", "characterModalImage");
-    characterModalImage.src = character.characterImageFull;
+    characterModalImage.src = character.characterImageFull == null ? DEFAULT_IMAGE_PATH : character.characterImageFull;
 
     let characterModalHeaderName = createHtmlElement(characterModalHeader, "h3", "characterModalHeaderName")
     characterModalHeaderName.innerHTML= character.characterName;
