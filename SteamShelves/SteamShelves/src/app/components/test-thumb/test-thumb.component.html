@@ -1,0 +1,6 @@
+<div *ngIf="movie" (click) ="clicked()">
+    <img src="{{movie.cover}}" />
+    <span>{{movie.title}}</span>
+    <span>{{movie.score.toPrecision(2)}}</span>
+
+</div>

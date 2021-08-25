@@ -1,0 +1,32 @@
+{
+    "movies": [
+        {
+            "id": 1,
+            "title": "LOTR 1",
+            "description": "LOTR 1 is a based movie",
+            "cover": "https://upload.wikimedia.org/wikipedia/sr/c/cd/The_Lord_of_the_Rings_The_Fellowship_of_the_Ring.jpg",
+            "score": 8.8
+          },
+           {
+            "id": 2,
+            "title": "LOTR 2",
+            "description": "LOTR 2 is a based movie",
+            "cover": "https://upload.wikimedia.org/wikipedia/sr/5/59/The_Lord_of_the_Rings_The_Two_Towers.jpg",
+            "score": 9.5
+          },
+          {
+            "id": 3,
+            "title": "LOTR 3",
+            "description": "LOTR 3 is a based movie",
+            "cover": "https://upload.wikimedia.org/wikipedia/sr/6/6a/The_Lord_of_the_Rings_The_Return_of_the_King.jpg",
+            "score": 9
+          },
+          {
+            "id": 4,
+            "title": "LOTR 4",
+            "description": "LOTR 4 niggers are done for",
+            "cover": "https://i.4pcdn.org/pol/1510095905956.jpg",
+            "score": 7.5
+          }
+    ]
+}

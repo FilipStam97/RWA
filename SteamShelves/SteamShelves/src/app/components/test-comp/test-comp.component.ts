@@ -10,19 +10,17 @@ export class TestCompComponent implements OnInit {
 
   constructor() { }
 //ako se ne stavi nista public je
-  @Input() movie: Movie = {
-    id: 0,
-    title: "",
-    description: "",
-    cover: "",
-    score: 0
-  }
+  @Input() movie: Movie | null = null;
 
   ngOnInit(): void {
   }
 
   rate(){
-     this.movie.score += 0.2; 
+    if(this.movie){
+      // ne sme da bude 0, null ili undefined, nullish vrednosti , to kaze sintaksa,
+      //also *ngIf kaze da ako je movie tj nije null onda ce da renderuje da ne bi prslo ako je null
+      this.movie.score += 0.2; 
+    }
   }
-
+  
 }

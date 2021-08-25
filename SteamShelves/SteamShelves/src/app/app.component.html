@@ -1,3 +1,3 @@
 <h1>LOLCINA</h1>
-<app-test-comp [movie] = "movie1"></app-test-comp>
-<app-test-comp [movie] = "movie2"></app-test-comp>
+<app-test-list (onSelectedMovie)="handleMovieSelection($event)"></app-test-list>
+<app-test-comp [movie] = "selectedMovie |async"></app-test-comp>

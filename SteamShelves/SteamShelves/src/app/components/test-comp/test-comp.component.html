@@ -1,5 +1,7 @@
+<div class= "container" *ngIf="movie">
 <h3>{{movie.title}}</h3>
 <img class ="Img" src = "{{movie.cover}}" />
 <div class="Desc">{{movie.description}}</div>
 <div class="Score" (click)="rate()">{{movie.score.toPrecision(2)}}</div>
+</div>
 
