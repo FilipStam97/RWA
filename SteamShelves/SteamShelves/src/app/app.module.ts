@@ -9,6 +9,8 @@ import { TestCompComponent } from './components/test-comp/test-comp.component';
 import { TestListComponent } from './components/test-list/test-list.component';
 import { TestServiceService } from './services/test-service.service';
 import { TestThumbComponent } from './components/test-thumb/test-thumb.component';
+import { StoreModule } from '@ngrx/store';
+import { MovieReducer } from './store/test-reducer';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { TestThumbComponent } from './components/test-thumb/test-thumb.component
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot({movies: MovieReducer})
   ],
   providers: [TestServiceService],
   bootstrap: [AppComponent]
