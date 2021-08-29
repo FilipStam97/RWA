@@ -1,3 +1,4 @@
+import { state } from "@angular/animations";
 import { createReducer, on, StateObservable } from "@ngrx/store";
 import { Movie } from "../models/movie";
 import * as Actions from "./test-actions";
@@ -57,5 +58,19 @@ export const MovieReducer = createReducer(
 
     // ima puno rucnog rada da se napravi state da bi se izbegle greske, kao sto se da videti, 
     //ali ima i bolji nacin, sl casa cemo to sad samo osnova
+  ),
+  on(
+    Actions.loadMovies,
+    (state: MovieState, {movies}) => ({
+      ...state,
+      allMovies: movies
+    })
+  ),
+  on(
+    Actions.selectMovie,
+    (state: MovieState, {movieID}) => ({
+      ...state,
+      selectedMovieID: movieID
+    })
   )
 );

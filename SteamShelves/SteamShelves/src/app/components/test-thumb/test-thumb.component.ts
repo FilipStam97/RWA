@@ -18,7 +18,8 @@ export class TestThumbComponent implements OnInit {
   clicked(){
     if(this.movie){
       this.onClick.emit(this.movie)
-
+//ne mora sve komponenete da budu svesne stora, higher order da ali ove manje je bolje da budu 
+//dumb komponenete i da komuniciraju samo sa roditeljima
     }
   }
 

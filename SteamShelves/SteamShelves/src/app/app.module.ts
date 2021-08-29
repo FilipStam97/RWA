@@ -11,6 +11,7 @@ import { TestServiceService } from './services/test-service.service';
 import { TestThumbComponent } from './components/test-thumb/test-thumb.component';
 import { StoreModule } from '@ngrx/store';
 import { MovieReducer } from './store/test-reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,10 @@ import { MovieReducer } from './store/test-reducer';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot({movies: MovieReducer})
+    StoreModule.forRoot({movies: MovieReducer}),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25
+    })
   ],
   providers: [TestServiceService],
   bootstrap: [AppComponent]
