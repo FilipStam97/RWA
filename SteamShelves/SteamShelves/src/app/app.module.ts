@@ -12,6 +12,7 @@ import { TestThumbComponent } from './components/test-thumb/test-thumb.component
 import { StoreModule } from '@ngrx/store';
 import { MovieReducer } from './store/test-reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     StoreModule.forRoot({movies: MovieReducer}),
     StoreDevtoolsModule.instrument({
       maxAge: 25
-    })
+    }),
+    EffectsModule.forRoot([MoviesEffects])
   ],
   providers: [TestServiceService],
   bootstrap: [AppComponent]
