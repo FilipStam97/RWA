@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { Movie } from './models/movie';
-import { TestServiceService } from './services/test-service.service';
-import { AppState } from './store/app-state';
-import { selectSelectedMovie } from './store/test-selectors';
+
 
 @Component({
   selector: 'app-root',
@@ -14,15 +11,13 @@ import { selectSelectedMovie } from './store/test-selectors';
 export class AppComponent implements OnInit{
   // subscripcije se stavljaju u onInit , zato implementiramo on init
   title = 'SteamShelves';
- selectedMovie: Observable<Movie | null> = of(null);
+
 
   ngOnInit() {
-    // this.store.select(state => state.movies.selectedMovieID)
-    //sada sa selectorom
-    this.selectedMovie = this.store.select(selectSelectedMovie);
+ 
   }
 
- constructor(private store: Store<AppState>){
+ constructor(){
 
  }
 
