@@ -6,11 +6,6 @@
       background-color: transparent;
   }
 
-  mat-toolbar {
-      box-shadow: 0px 5px 5px #888888;
-      
-  }
-
 
   .drawer-container {
     height: 100%;
@@ -19,6 +14,28 @@
 
   .drawer-sidenav {
     padding: 20px;
+    width: 200px;
+   
   }
+
+  .mat-toolbar {
+    position: sticky;
+    background-color: #1b2838    ;
+    box-shadow: 0px 5px 5px #888888;
+
+  }
+
+.logo-link {
+ color: white;
+ text-decoration: none;
+}
+
+.search-form-field {
+  font-size: 15px;
+  width: 400px;
+  padding: 2%;
+ 
+}
+
 
 

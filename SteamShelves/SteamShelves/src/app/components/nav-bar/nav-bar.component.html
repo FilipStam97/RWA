@@ -1,21 +1,31 @@
 
 <mat-drawer-container class="drawer-container" autosize>
   <mat-drawer #drawer class="drawer-sidenav" mode="side">
-    <p>Shelvesssssssssssssssss</p>
+    <mat-nav-list>
+      <a mat-list-item routerLink="shelves" routerLinkActive="active" (click)="drawer.toggle()">My Shelves</a>
+      <a mat-list-item routerLink="friends" routerLinkActive="active" (click)="drawer.toggle()">Friends</a>
+    </mat-nav-list>
   </mat-drawer>
   <mat-drawer-content>
     <mat-toolbar color="primary">
       <button (click)="drawer.toggle()" mat-icon-button class="toolbar-icon" >
         <mat-icon>menu</mat-icon>
       </button>
+      <a class ="logo-link" routerLink="home" routerLinkActive="active">
       <span>SteamShelves</span>
+      </a>
+      <span class="spacer"></span>
+      <mat-form-field class="search-form-field" appearance="fill">
+        <mat-label>Search</mat-label>
+        <input matInput type="text" >
+        <mat-icon>search</mat-icon>
+      </mat-form-field>
       <span class="spacer"></span>
       <button [matMenuTriggerFor]="menu" mat-icon-button class="toolbar-icon" >
         <mat-icon>account_circle</mat-icon>
       </button>
     </mat-toolbar>
-    <p>WHAT THE FUCKs</p>
-
+    <router-outlet></router-outlet>
   </mat-drawer-content>
 </mat-drawer-container>
 
