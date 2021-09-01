@@ -1,10 +1,26 @@
-<mat-toolbar color="primary">
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span>SteamShelves</span>
-    <span class="spacer"></span>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-      <mat-icon>account_circle</mat-icon>
-    </button>
-  </mat-toolbar>
+
+<mat-drawer-container class="drawer-container" autosize>
+  <mat-drawer #drawer class="drawer-sidenav" mode="side">
+    <p>Shelvesssssssssssssssss</p>
+  </mat-drawer>
+  <mat-drawer-content>
+    <mat-toolbar color="primary">
+      <button (click)="drawer.toggle()" mat-icon-button class="toolbar-icon" >
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>SteamShelves</span>
+      <span class="spacer"></span>
+      <button [matMenuTriggerFor]="menu" mat-icon-button class="toolbar-icon" >
+        <mat-icon>account_circle</mat-icon>
+      </button>
+    </mat-toolbar>
+    <p>WHAT THE FUCKs</p>
+
+  </mat-drawer-content>
+</mat-drawer-container>
+
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>Item 1</button>
+  <button mat-menu-item>Item 2</button>
+</mat-menu>
