@@ -1,1 +1,6 @@
-<p>{{game.name}}</p>
+<div class="game-profile-conatiner">
+    <h2>{{game.name}}</h2>
+    <img class = "game-header-image" src="{{game.header_image}}"/>
+    <div [innerHTML]="game.detailed_description"></div>
+    <p [innerHTML]="game.pc_requirements.minimum"></p>
+</div>

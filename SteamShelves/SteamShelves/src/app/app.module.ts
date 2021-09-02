@@ -21,9 +21,7 @@ import {MatListModule} from '@angular/material/list';
 import { HomeComponent } from './components/home/home.component';
 import {MatInputModule} from '@angular/material/input';
 import { GameProfileComponent } from './components/game-profile/game-profile.component';
-
-
-
+import {MatDividerModule} from '@angular/material/divider';
 
 
 
@@ -56,7 +54,8 @@ import { GameProfileComponent } from './components/game-profile/game-profile.com
     MatSidenavModule,
     MatMenuModule,
     MatListModule,
-    MatInputModule
+    MatInputModule,
+    MatDividerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
