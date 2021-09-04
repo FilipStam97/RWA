@@ -4,11 +4,34 @@
     flex-wrap: wrap;
     flex-direction: column;
     background-color: #2a475e;
-    color: white;
+    color: gainsboro;
     padding: 1%;
 }
 
 .game-header-image{
     width: 400px;
+    height: 200px;
     
+}
+
+.systeem-requirements-section {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 1%;
+    margin-bottom: 1%;
+
+    
+}
+
+mat-divider {
+    background-color: grey;
+}
+
+
+
+.description-div {
+    margin-top: 1%;
+    margin-bottom: 1%;
+
 }

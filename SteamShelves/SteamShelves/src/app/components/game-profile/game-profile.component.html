@@ -1,6 +1,16 @@
 <div class="game-profile-conatiner">
-    <h2>{{game.name}}</h2>
+    <h1>{{game.name}}</h1>
     <img class = "game-header-image" src="{{game.header_image}}"/>
-    <div [innerHTML]="game.detailed_description"></div>
-    <p [innerHTML]="game.pc_requirements.minimum"></p>
+    <div class ="description-div" [innerHTML]="game.detailed_description"></div>
+    <mat-divider></mat-divider>
+    <div class ="systeem-requirements-section">
+    <div [innerHTML]="game.pc_requirements.minimum"></div>
+    <div [innerHTML]="game.pc_requirements.recommended"></div>
+    </div>
+    <div [innerHTML]="game.supported_languages"></div>
+    <div [innerHTML]="game.developers"></div>
+    <div [innerHTML]="game.publishers"></div>
+    <div>{{game.release_date.date}}</div>
+
+
 </div>
