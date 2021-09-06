@@ -16,7 +16,6 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatMenuModule} from '@angular/material/menu';
 import { MyShelvesComponent } from './components/my-shelves/my-shelves.component';
-import { FriendsComponent } from './components/friends/friends.component';
 import {MatListModule} from '@angular/material/list';
 import { HomeComponent } from './components/home/home.component';
 import {MatInputModule} from '@angular/material/input';
@@ -32,7 +31,6 @@ import {MatDividerModule} from '@angular/material/divider';
     AppComponent,
     NavBarComponent,
     MyShelvesComponent,
-    FriendsComponent,
     HomeComponent,
     GameProfileComponent,
     

@@ -15,14 +15,22 @@
   .drawer-sidenav {
     padding: 20px;
     width: 200px;
+    background-color: #1b2838;
+   
    
   }
 
+
+
   .mat-toolbar {
     position: sticky;
-    background-color: #1b2838    ;
+    background-color: #1b2838;
     box-shadow: 0px 5px 5px #888888;
 
+  }
+
+  .drawer-link {
+    color: white;
   }
 
 .logo-link {

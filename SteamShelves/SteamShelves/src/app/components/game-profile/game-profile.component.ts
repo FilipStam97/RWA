@@ -198,6 +198,7 @@ export class GameProfileComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+      
   }
 
 }
