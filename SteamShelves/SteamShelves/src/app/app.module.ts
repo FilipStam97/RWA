@@ -21,6 +21,11 @@ import { HomeComponent } from './components/home/home.component';
 import {MatInputModule} from '@angular/material/input';
 import { GameProfileComponent } from './components/game-profile/game-profile.component';
 import {MatDividerModule} from '@angular/material/divider';
+import { CookieService } from 'ngx-cookie-service';
+import { UserService } from './services/user.service';
+import { UserEffects } from './store/user/user.effects';
+import { userReducer } from './store/user/user.reducer';
+import { LoginComponent } from './components/login/login.component';
 
 
 
@@ -33,6 +38,7 @@ import {MatDividerModule} from '@angular/material/divider';
     MyShelvesComponent,
     HomeComponent,
     GameProfileComponent,
+    LoginComponent,
     
 
   ],
@@ -40,11 +46,11 @@ import {MatDividerModule} from '@angular/material/divider';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot(userReducer),
     StoreDevtoolsModule.instrument({
       maxAge: 25
     }),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([UserEffects]),
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
@@ -55,7 +61,7 @@ import {MatDividerModule} from '@angular/material/divider';
     MatInputModule,
     MatDividerModule
   ],
-  providers: [],
+  providers: [CookieService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

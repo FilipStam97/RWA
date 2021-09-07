@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { CookieService } from 'ngx-cookie-service';
 import { Observable, of } from 'rxjs';
+import { AppState } from './store/app.state';
+import { auth } from './store/user/user.actions';
 
 
 @Component({
@@ -11,23 +14,18 @@ import { Observable, of } from 'rxjs';
 export class AppComponent implements OnInit{
   // subscripcije se stavljaju u onInit , zato implementiramo on init
   title = 'SteamShelves';
+  loogedIn: boolean | undefined;
 
 
-  ngOnInit() {
+
+ constructor(private cookieService: CookieService, private store: Store<AppState>){
+
+ }
+
  
-  }
+ ngOnInit() {
+    this.store.dispatch(auth({ username: "NateHiggers", password: "NateHiggers" }));
+}
 
- constructor(){
 
- }
-
- handleMovieSelection(movieId: number){
-
-  // sideeffect kad se delilo po referenci sa event bubblingom je da se sam objekat delio po referenci i onda se live menjao score
-  // to je bio sideefect jer je ista instanca movia ali moze da bude opasan ovoe je bio prelude za state management
-  // $event je rezervisana rec za event , za event emmiter
-  
-  
-  //this.selectedMovie=this.movieService.getByID(movieId);
- }
 }
