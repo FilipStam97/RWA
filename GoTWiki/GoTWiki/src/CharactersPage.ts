@@ -171,12 +171,12 @@ getFilteredCharacters() {
     .subscribe( 
         res => {
             console.log(res);
-           this.renderCharacterList(res);
+           this.renderCharacterList(<Character[]>res);
         }
     )
 }
 
-renderCharacterList(characterList: any) {
+renderCharacterList(characterList: Character[]) {
     let containerDiv = <HTMLElement>document.querySelector(".characterListDiv");
     containerDiv.innerHTML="";
     characterList.forEach((character: any) => {
@@ -187,7 +187,7 @@ renderCharacterList(characterList: any) {
 
 }
 
-renderCharacterCard(host: HTMLElement, character: any) {
+renderCharacterCard(host: HTMLElement, character: Character) {
 
     let cardDiv = createHtmlElement(host, "div", "cardDiv card mb-3");
     cardDiv.setAttribute("data-mdb-toggle","modal");

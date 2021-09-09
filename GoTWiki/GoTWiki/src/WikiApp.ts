@@ -1,11 +1,9 @@
 
 import { createHtmlElement } from "./DOMbuilder";
-import { SERVER_CONNECTION } from "./Config";
 import { CharactersPage } from "./CharactersPage";
-import { catchError, combineAll, concatAll, debounceTime, filter, map, mergeMap, retry, scan, switchMap, take, takeUntil,toArray,zip, zipAll } from "rxjs/operators";
-import { combineLatest, concat, forkJoin, merge } from 'rxjs';
-import { from, interval, of, range, Observable, Subject, fromEvent } from "rxjs";
-import { ajax } from "rxjs/ajax";
+import { debounceTime, filter, map, switchMap} from "rxjs/operators";
+import { fromEvent } from "rxjs";
+import { getSearchResults } from "./WikiService";
 const DEBOUNCE_TIME_VALUE = 700;
 const SEARCH_INPUT_MIN_LENGTH = 3;
 
@@ -62,7 +60,7 @@ export class WikiApp {
             map((ev: InputEvent) => (<HTMLInputElement>ev.target).value),
             filter(input => input.length >= SEARCH_INPUT_MIN_LENGTH),
             switchMap( value => 
-                this.getSearchResults(value)
+                getSearchResults(value)
             )
         )
         .subscribe( res =>{ 
@@ -70,27 +68,7 @@ export class WikiApp {
         });
     }
 
-    getSearchResults(value: string): Observable<any> {
-        return concat(
-          ajax({
-            url:`${SERVER_CONNECTION}/characters/characterName/${value}`,
-            method: 'GET',
-            headers : { 'Content-Type': 'application/json' },
-        }).pipe(
-            map(res => res.response)
-        ),
-        ajax({
-            url:`${SERVER_CONNECTION}/characters/actorName/${value}`,
-            method: 'GET',
-            headers : { 'Content-Type': 'application/json' },
-        }).pipe(
-            map(res => res.response)
-        )
-    ).pipe(
-        concatAll(),
-        toArray()
-    )
-    }
+
 
 }
 

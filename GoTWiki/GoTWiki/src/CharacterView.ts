@@ -2,7 +2,7 @@ import { ajax } from "rxjs/ajax";
 import { concatAll, map } from "rxjs/operators";
 import { createHtmlElement } from "./DOMbuilder";
 import { DEFAULT_IMAGE_PATH, SERVER_CONNECTION } from "./Config";
-
+const IMDB_LINK = "https://www.imdb.com";
 
 
 
@@ -30,7 +30,7 @@ export function renderCharacterView(host: HTMLElement, character: any) {
     characterViewActorName.innerHTML= "Actor: ";
     let characterViewActorLink = <HTMLAnchorElement>createHtmlElement(characterViewActorName, "a", "characterViewActorNameAnchor");
     characterViewActorLink.innerHTML =character.actorName;
-    characterViewActorLink.href = `https://www.imdb.com/${character.actorLink}`;
+    characterViewActorLink.href = `${IMDB_LINK}/${character.actorLink}`;
     characterViewActorLink.target= "_blank";
     }
     
@@ -40,7 +40,7 @@ export function renderCharacterView(host: HTMLElement, character: any) {
         character.actors.forEach((actor: { actorName: string, actorLink: string; }) => {
             let characterViewActorLink = <HTMLAnchorElement>createHtmlElement(characterViewActorName, "a", "characterViewActorName");
             characterViewActorLink.innerHTML =`${actor.actorName}, `;
-            characterViewActorLink.href = `https://www.imdb.com/${actor.actorLink}`;
+            characterViewActorLink.href = `${IMDB_LINK}/${actor.actorLink}`;
             characterViewActorLink.target= "_blank";
         });
     }
