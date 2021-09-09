@@ -1,4 +1,4 @@
 export interface User {
-    userID: number,
+    _id: string,
     username: string
 }

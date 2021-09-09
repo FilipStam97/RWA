@@ -1,1 +1,12 @@
-<p>my-shelves works!</p>
+<div class="myShelvesContainer">
+<h1>My Shelves</h1>
+<button mat-flat-button class ="create-shelf-button button-color">Create a new shelf</button>
+<mat-divider></mat-divider>
+<div class="shelf-container" *ngFor="let shelf of shelves | async">
+    <button mat-mini-fab class ="delete-shelf-button button-color">
+        <mat-icon>delete</mat-icon>
+    </button>
+<app-shelf  [shelve]="shelf"></app-shelf>
+</div>
+
+</div>

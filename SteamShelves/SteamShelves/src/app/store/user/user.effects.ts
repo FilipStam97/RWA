@@ -18,7 +18,6 @@ export class UserEffects {
       switchMap(({ username, password }) =>
         this.userService.authUser(username, password).pipe(
           map((user) => UserActions.authSucces({ user })),
-          tap(() => console.log("workaround")),
           catchError(() => of({ type: 'Auth error' }))
         )
       )

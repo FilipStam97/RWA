@@ -1,27 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import {catchError} from 'rxjs/operators';
-import { User } from '../models/user';
+import { Shelve } from '../models/shelve';
 import { errorHandler } from './errorHandler';
-
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class ShelvesService {
 
   constructor(private httpClient: HttpClient) { }
 
-  authUser(username: string, password: string) {
-    const req = {
-      username: username,
-      password: password
-    }
-    return this.httpClient.post<User>(`${environment.apiUrl}/user/auth`, req).
+  getShelves(userID: string) {
+    return this.httpClient.get<Shelve[]>(`${environment.apiUrl}/shelves/${userID}`).
     pipe(catchError(errorHandler));
   }
 
 }
-
 

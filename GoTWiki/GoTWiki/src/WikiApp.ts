@@ -60,7 +60,7 @@ export class WikiApp {
         .pipe(
             debounceTime(DEBOUNCE_TIME_VALUE),
             map((ev: InputEvent) => (<HTMLInputElement>ev.target).value),
-            filter(x => x.length >= SEARCH_INPUT_MIN_LENGTH),
+            filter(input => input.length >= SEARCH_INPUT_MIN_LENGTH),
             switchMap( value => 
                 this.getSearchResults(value)
             )

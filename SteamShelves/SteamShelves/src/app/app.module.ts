@@ -26,6 +26,15 @@ import { UserService } from './services/user.service';
 import { UserEffects } from './store/user/user.effects';
 import { userReducer } from './store/user/user.reducer';
 import { LoginComponent } from './components/login/login.component';
+import { shelvesReducer } from './store/shelves/shelves.reducer';
+import { ShelvesService } from './services/shelves.service';
+import { ShelvesEffects } from './store/shelves/shelves.effects';
+import { ShelfComponent } from './components/shelf/shelf.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { GameThumbComponent } from './components/game-thumb/game-thumb.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+
 
 
 
@@ -39,6 +48,8 @@ import { LoginComponent } from './components/login/login.component';
     HomeComponent,
     GameProfileComponent,
     LoginComponent,
+    ShelfComponent,
+    GameThumbComponent,
     
 
   ],
@@ -46,11 +57,11 @@ import { LoginComponent } from './components/login/login.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot(userReducer),
+    StoreModule.forRoot({user: userReducer, shelves: shelvesReducer}),
     StoreDevtoolsModule.instrument({
       maxAge: 25
     }),
-    EffectsModule.forRoot([UserEffects]),
+    EffectsModule.forRoot([UserEffects, ShelvesEffects]),
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
@@ -59,9 +70,12 @@ import { LoginComponent } from './components/login/login.component';
     MatMenuModule,
     MatListModule,
     MatInputModule,
-    MatDividerModule
+    MatDividerModule,
+    MatExpansionModule,
+    MatCardModule,
+    MatAutocompleteModule
   ],
-  providers: [CookieService, UserService],
+  providers: [CookieService, UserService, ShelvesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
