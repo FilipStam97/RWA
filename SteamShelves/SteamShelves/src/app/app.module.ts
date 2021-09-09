@@ -34,6 +34,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { GameThumbComponent } from './components/game-thumb/game-thumb.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { SearchService } from './services/search.service';
 
 
 
@@ -75,7 +76,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatCardModule,
     MatAutocompleteModule
   ],
-  providers: [CookieService, UserService, ShelvesService],
+  providers: [CookieService, UserService, ShelvesService, SearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
