@@ -1,8 +1,10 @@
 
 
 .games-container-div {
+    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    margin: 2%;
 }
 
 mat-expansion-panel {
@@ -15,8 +17,16 @@ mat-panel-title{
 }
 
 .shelf-container{
-    margin-bottom: 3%;
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-right: 2%;
+    border: solid;
+    border-width: 1px;
+    
 }
+
+
+
 
 
 
