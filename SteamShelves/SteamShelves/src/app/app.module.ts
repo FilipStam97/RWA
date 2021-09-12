@@ -35,6 +35,9 @@ import { GameThumbComponent } from './components/game-thumb/game-thumb.component
 import {MatCardModule} from '@angular/material/card';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { SearchService } from './services/search.service';
+import { GamesService } from './services/games.service';
+import { GamesEffects } from './store/games/games.effects';
+import { gamesReducer } from './store/games/games.reducer';
 
 
 
@@ -58,11 +61,11 @@ import { SearchService } from './services/search.service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot({user: userReducer, shelves: shelvesReducer}),
+    StoreModule.forRoot({user: userReducer, shelves: shelvesReducer, games: gamesReducer}),
     StoreDevtoolsModule.instrument({
       maxAge: 25
     }),
-    EffectsModule.forRoot([UserEffects, ShelvesEffects]),
+    EffectsModule.forRoot([UserEffects, ShelvesEffects, GamesEffects]),
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
@@ -76,7 +79,7 @@ import { SearchService } from './services/search.service';
     MatCardModule,
     MatAutocompleteModule
   ],
-  providers: [CookieService, UserService, ShelvesService, SearchService],
+  providers: [CookieService, UserService, ShelvesService, SearchService, GamesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
