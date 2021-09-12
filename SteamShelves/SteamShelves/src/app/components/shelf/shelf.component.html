@@ -1,15 +1,15 @@
 
-<div class="shelf-container" *ngIf="shelve">
+<div class="shelf-container" *ngIf="shelf">
 
 <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        {{shelve.title}}
+        {{shelf.title}}
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <p>{{shelve.description}}</p>
+    <p>{{shelf.description}}</p>
     <div class="games-container-div">
-    <app-game-thumb *ngFor="let gameID of shelve.gameIDs" [gameID]="gameID" ></app-game-thumb>
+    <app-game-thumb *ngFor="let game of shelfGames | async" [game]="game" ></app-game-thumb>
    </div>
   </mat-expansion-panel>
 </div>

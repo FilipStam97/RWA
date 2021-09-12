@@ -3,7 +3,7 @@
 <button mat-flat-button class ="create-shelf-button button-color">Create a new shelf</button>
 <mat-divider></mat-divider>
 <div class="shelf-container" *ngFor="let shelf of shelves | async">
-<app-shelf  [shelve]="shelf"></app-shelf>
+<app-shelf  [shelf]="shelf"></app-shelf>
 <button  mat-button class ="delete-shelf-button button-color">
     Delete
 </button>

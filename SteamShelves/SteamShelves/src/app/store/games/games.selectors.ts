@@ -15,3 +15,10 @@ export const selectGameByAppId = (appid: number) =>
         selectGamesFeature,
         (state: GamesState) =>  <Game>state.entities[appid]
     );
+
+
+export const selectGamesWithIds = (ids: number[]) => 
+        createSelector(
+            selectGamesFeature,
+            (state: GamesState) => ids.map(id => <Game>state.entities[id])
+        );
