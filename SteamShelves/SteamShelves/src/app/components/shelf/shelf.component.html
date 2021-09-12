@@ -9,7 +9,7 @@
     </mat-expansion-panel-header>
     <p>{{shelve.description}}</p>
     <div class="games-container-div">
-    <!-- <app-game-thumb *ngFor="let game of shelve.games" [game]="game" ></app-game-thumb> -->
+    <app-game-thumb *ngFor="let gameID of shelve.gameIDs" [gameID]="gameID" ></app-game-thumb>
    </div>
   </mat-expansion-panel>
 </div>

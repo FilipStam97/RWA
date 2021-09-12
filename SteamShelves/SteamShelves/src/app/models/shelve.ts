@@ -4,6 +4,6 @@ export interface Shelve {
     userID: string;
     title: string;
     description: string;
-    gameIDs: Array<Number>;
+    gameIDs: Array<number>;
     
 }

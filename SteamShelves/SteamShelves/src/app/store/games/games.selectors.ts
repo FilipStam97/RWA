@@ -1,4 +1,5 @@
 import { createSelector } from "@ngrx/store";
+import { Game } from "src/app/models/game";
 import { AppState } from "../app.state";
 import { GamesState } from "./games.reducer";
 
@@ -9,11 +10,8 @@ export const selectGamesFeature = createSelector(
     (games) => games
 );
 
-// export const selectGameByAppId = (props: {appid: number}) =>
-//     createSelector(
-//         selectGamesFeature,
-//         (state: GamesState) =>     
-//             Object.create(
-//             state.entities.find(element => element.steam_appid === props.appid)
-//         ) 
-//     );
+export const selectGameByAppId = (appid: number) =>
+    createSelector(
+        selectGamesFeature,
+        (state: GamesState) =>  <Game>state.entities[appid]
+    );

@@ -10,7 +10,7 @@ export interface GamesState extends EntityState<Game> {
 }
 
 const adapter = createEntityAdapter<Game>({
-    selectId: (game) => game._id
+    selectId: (game) => game.steam_appid
 });
 
 const initialState = adapter.getInitialState();
