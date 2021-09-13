@@ -1,9 +1,12 @@
-
-    <mat-card *ngIf="game" class="game-thumb-card">
-         <img mat-card-image src="{{game.header_image}}" >
-        <mat-card-content>
-            <h4>{{game.name}}</h4>
-        </mat-card-content>
-    </mat-card>
-
+<div class="game-thumb-container-div">
+<mat-card *ngIf="game" class="game-thumb-card">
+    <img mat-card-image src="{{game.header_image}}" >
+    <mat-card-content>
+        <h4>{{game.name}}</h4>
+    </mat-card-content>
+</mat-card>
+<button  mat-button class ="remove-game-button button-color">
+    Remove
+</button>
+</div>
 
